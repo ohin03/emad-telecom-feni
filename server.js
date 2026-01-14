@@ -8,13 +8,17 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoute.js";
 import orderRoutes from "./routes/orderRoute.js";
 import cors from "cors";
-
+import path from "path";
+import { fileURLToPath } from "url";
 // configure env
 dotenv.config();
 
 // database config
 connectDB();
 
+//esmoduel fix
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 // rest object
 const app = express();
 
@@ -24,7 +28,7 @@ app.use(morgan("dev"));
 
 // server.js
 app.use(cors());
-
+app.use(express.static(path.join(__dirname, './client/build')));
 
 // API routes
 app.use("/api/v1/auth", authRoutes);
@@ -33,8 +37,8 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/order", orderRoutes);
 
 // test route
-app.get("/", (req, res) => {
-  res.send("<h1>EMAD TELECOM Backend is running 🚀</h1>");
+app.use("*", function (req, res)  {
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 // PORT
