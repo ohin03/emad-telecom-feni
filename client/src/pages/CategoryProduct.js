@@ -18,6 +18,8 @@ const CategoryProduct = () => {
     if (params?.slug) getProductByCat();
   }, [params?.slug]);
 
+
+
   const getProductByCat = async () => {
     try {
       const { data } = await axios.get(
