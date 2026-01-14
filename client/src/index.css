@@ -551,4 +551,17 @@ a {
   .search-page-title {
     font-size: 1.6rem;
   }
+  .search-product-card {
+    width: 92%;
+  }
+
+  .search-product-img-box {
+    height: 160px; /* 🔥 mobile image height fix */
+  }
 }
+@media (max-width: 480px) {
+  .search-product-img-box {
+    height: 140px;
+  }
+}
+
