@@ -6,61 +6,50 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 const Search = () => {
-  const [values, setValues] = useSearch()
+  const [values] = useSearch()
   const [cart, setCart] = useCart()
   const navigate = useNavigate()
 
   return (
-    <Layout title={'Search results'}>
-      <div className="container">
-        <div className="text-center">
-          <h1>Search Result</h1>
-          <h6>
+    <Layout title="Search Results">
+      <div className="search-container">
+        <div className="search-header">
+          <h1 className="search-title">Search Results</h1>
+          <h6 className="search-subtitle">
             {values?.results.length < 1
               ? "No Products Found"
-              : `Found ${values?.results.length}`}
+              : `Found ${values?.results.length} product(s)`}
           </h6>
+        </div>
 
-            <div className="d-flex flex-wrap mt-4">
-            {values?.results.map((p) => (
-              <div
-                key={p._id}
-                className="create-product-card m-2"
-                style={{ width: "18rem" }}
-              >
-                <div className="product-img-wrapper">
-                  <img
-                    src={`/api/v1/product/product-photo/${p._id}`}
-                    className="card-img-top img-preview"
-                    alt={p.name}
-                  />
-                </div>
-
-                <div className="card-body">
-  <h5 className="card-title">{p.name}</h5>
-  <p className="card-text">{p.description.substring(0, 50)}...</p>
-  <p className="card-text">TK: {p.price}</p>
-
-  <div className="btn-wrapper">
-    <button className="btn btn-primary p-1" onClick={() => navigate(`/product/${p.slug}`)}>More details</button>
-    <button className="btn btn-secondary p-1" onClick={() => {
-      const item = { ...p, quantity: 1 };
-      setCart([...cart, item]);
-      localStorage.setItem('cart', JSON.stringify([...cart, item]));
-      toast.success('Item Added to Cart');
-    }}>ADD TO CART</button>
-  </div>
-</div>
-
+        <div className="search-grid">
+          {values?.results.map((product) => (
+            <div key={product._id} className="search-card">
+              <div className="search-card-img">
+                <img
+                  src={`/api/v1/product/product-photo/${product._id}`}
+                  alt={product.name}
+                />
               </div>
-            ))}
-            {values?.results.length === 0 && (
-              <h5 className="text-center mt-3">No products found</h5>
-            )}
-          </div>
-
-
-
+              <div className="search-card-body">
+                <h5 className="search-card-title">{product.name}</h5>
+                <p className="search-card-desc">{product.description.substring(0, 50)}...</p>
+                <p className="search-card-price">TK: {product.price}</p>
+                <div className="search-card-buttons">
+                  <button className="btn-details" onClick={() => navigate(`/product/${product.slug}`)}>More details</button>
+                  <button className="btn-cart" onClick={() => {
+                    const item = { ...product, quantity: 1 };
+                    setCart([...cart, item]);
+                    localStorage.setItem('cart', JSON.stringify([...cart, item]));
+                    toast.success('Item Added to Cart');
+                  }}>Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {values?.results.length === 0 && (
+            <h5 className="no-products">No products found</h5>
+          )}
         </div>
       </div>
     </Layout>
