@@ -29,20 +29,22 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// serve React frontend
-app.use(express.static(path.join(__dirname, "client/build")));
-
-// API routes
+// API routes (এগুলো আগে রাখো)
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/order", orderRoutes);
 
-// fallback route for React
-// server.js
-// এটা replace করো
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// Serve React frontend
+app.use(express.static(path.join(__dirname, "client/build")));
+
+// Fallback route for React (non-API GET requests)
+app.use((req, res, next) => {
+  if (req.method === "GET" && !req.path.startsWith("/api")) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  } else {
+    next();
+  }
 });
 
 // PORT
