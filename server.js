@@ -23,10 +23,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // server.js
-app.use(cors({
-  origin: ["https://emad-telecom-feni.vercel.app", "http://localhost:3000"],
-  credentials: true
-}));
+app.use(cors());
 
 
 // API routes
