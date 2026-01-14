@@ -1,0 +1,331 @@
+/* ====== General Page ====== */
+.orders-admin-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ====== Sidebar ====== */
+.orders-admin-sidebar {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+/* ====== Titles ====== */
+.orders-admin-title {
+  font-weight: 700;
+  color: #343a40;
+}
+
+/* ====== Loading ====== */
+.orders-admin-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: #0d6efd;
+}
+
+/* ====== Cards ====== */
+.orders-admin-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+.orders-admin-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* ====== Card Header ====== */
+.orders-admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.orders-admin-text-muted {
+  color: #6c757d;
+}
+
+/* ====== Badges ====== */
+.orders-admin-badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.orders-admin-badge-success { background-color: #28a745; }
+.orders-admin-badge-info { background-color: #0dcaf0; }
+.orders-admin-badge-warning { background-color: #ffc107; color: #212529; }
+
+/* ====== Card Body ====== */
+.orders-admin-card-body p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* ====== Cancelled Info ====== */
+.orders-admin-cancelled-info {
+  background-color: #f1f3f5;
+  border-left: 4px solid #dc3545;
+}
+
+/* ====== Products ====== */
+.orders-admin-products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.orders-admin-product-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+}
+.orders-admin-product-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.orders-admin-product-name {
+  font-weight: 600;
+}
+
+/* ====== Tracking ====== */
+.orders-admin-tracking {
+  font-size: 0.9rem;
+  border-left: 4px solid #0dcaf0;
+}
+
+/* ====== Select Boxes ====== */
+.orders-admin-select {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  min-width: 120px;
+}
+
+/* ====== Comments ====== */
+.orders-admin-comments {
+  background-color: #e9f7ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.orders-admin-comments-header h6 {
+  font-weight: 600;
+  color: #0d6efd;
+  margin-bottom: 3px;
+}
+
+.orders-admin-comments-header span {
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+.orders-admin-comments-list {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+/* Comment Bubbles */
+.orders-admin-comment-bubble {
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  position: relative;
+}
+
+.orders-admin-comment-admin {
+  background-color: #0d6efd;
+  color: #fff;
+  align-self: flex-start;
+}
+
+.orders-admin-comment-user {
+  background-color: #f1f3f5;
+  color: #212529;
+  align-self: flex-end;
+}
+
+/* Bubble Header */
+.orders-admin-bubble-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 5px;
+}
+
+.orders-admin-bubble-author {
+  font-weight: 600;
+}
+
+.orders-admin-bubble-time {
+  font-style: italic;
+}
+
+/* Comment Input */
+.orders-admin-comment-input-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.orders-admin-comment-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+}
+
+.orders-admin-comment-send-btn {
+  padding: 8px 16px;
+  background-color: #0d6efd;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.orders-admin-comment-send-btn:hover {
+  background-color: #0b5ed7;
+}
+
+/* ====== Cancel Button ====== */
+.orders-admin-cancel-btn button {
+  border-radius: 8px;
+  padding: 6px 15px;
+  font-weight: 600;
+}
+
+/* ====== Modal ====== */
+.orders-admin-modal-dialog {
+  max-width: 500px;
+  margin: 50px auto;
+}
+.orders-admin-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.orders-admin-modal-header, .orders-admin-modal-footer {
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+.orders-admin-modal-footer {
+  border-top: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.orders-admin-modal-body {
+  padding: 15px;
+}
+.orders-admin-card {
+    width: 90%; /* Mobile full width minus padding */
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Cancelled Order Highlight */
+.orders-admin-card.cancelled {
+  border: 2px solid #dc3545; /* strong red border */
+  background-color: #f8d7da; /* light red/pink background */
+  color: #721c24; /* dark red text for contrast */
+}
+
+.orders-admin-card.cancelled .orders-admin-card-header span.badge {
+  background-color: #dc3545 !important; /* badge red */
+  color: #fff;
+}
+
+.orders-admin-card.cancelled .orders-admin-card-body {
+  color: #721c24; /* dark red text */
+}
+
+.orders-admin-card.cancelled .orders-admin-comment-bubble {
+  background-color: #f5c6cb; /* lighter red for comment bubbles */
+  color: #721c24;
+}
+
+
+
+
+
+
+
+
+
+/* ====== Responsive ====== */
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .orders-admin-products {
+    flex-direction: column;
+  }
+
+  .orders-admin-card {
+    width: 92%; /* Mobile full width minus padding */
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .orders-admin-card-body {
+    font-size: 0.9rem;
+  }
+
+  .orders-admin-select {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  .orders-admin-comments {
+    padding: 10px;
+  }
+
+  .orders-admin-comment-input-box {
+    flex-direction: column;
+  }
+
+  .orders-admin-comment-send-btn {
+    width: 100%;
+  }
+}
+
+/* Optional: for very small screens (<480px) */
+@media (max-width: 480px) {
+  .orders-admin-card {
+    padding: 15px;
+  }
+  .orders-admin-products {
+    gap: 10px;
+  }
+}

@@ -1,0 +1,131 @@
+/* ===== REGISTER PAGE FULL SCREEN BACKGROUND ===== */
+.register-page {
+  background: radial-gradient(circle at top, #0f2027, #203a43, #000);
+  min-height: 73vh; /* full viewport height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* top aligned */
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== HEADING ===== */
+.register-page h1 {
+  color: #00eaff;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(0, 234, 255, 0.6);
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* ===== FORM BOX ===== */
+.register-page form.col-md-6 {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 35px 30px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  transition: all 0.4s ease;
+  width: 100%;
+  max-width: 450px;
+}
+
+/* ===== INPUT BASE ===== */
+.register-page form .form-control {
+  background: rgba(0, 0, 0, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #00eaff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  transition: all 0.25s ease;
+}
+
+.register-page form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.25); /* হালকা placeholder */
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+
+.register-page form .form-control:focus {
+  background: rgba(0, 0, 0, 0.65) !important;
+  border-color: #00eaff;
+  box-shadow: 0 0 0 3px rgba(0, 234, 255, 0.35);
+  outline: none;
+}
+
+.register-page form .form-control:focus::placeholder {
+  color: rgba(255, 255, 255, 0.18); /* focus হলে fade */
+}
+
+.register-page form .form-control:not(:focus) {
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* ===== AUTOFILL FIX ===== */
+.register-page input:-webkit-autofill,
+.register-page input:-webkit-autofill:hover,
+.register-page input:-webkit-autofill:focus,
+.register-page textarea:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.65) inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* ===== PASSWORD WRAPPER ===== */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 48px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ffffff;        
+  font-size: 18px;
+  z-index: 2;
+}
+
+.eye-icon:hover {
+  color: #00eaff;
+}
+
+/* ===== BUTTON ===== */
+.register-page form button.btn-primary {
+  background: linear-gradient(135deg, #00eaff, #007bff);
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 234, 255, 0.5);
+  transition: all 0.35s ease;
+}
+
+.register-page form button.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 123, 255, 0.7);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 576px) {
+  .register-page form.col-md-6 {
+    padding: 25px 20px;
+  }
+}

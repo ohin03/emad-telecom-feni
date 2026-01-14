@@ -1,0 +1,174 @@
+/* ==================== UsersUnique.css ==================== */
+
+/* Body background & font */
+.users-body{
+  background: linear-gradient(120deg, #e0eafc, #cfdef3);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Container styling */
+.users-page-container {
+  min-height: 90vh;
+  padding: 2rem 1rem;
+}
+
+/* Sidebar */
+.users-sidebar {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Content */
+.users-content {
+  padding: 1rem;
+}
+
+/* Title */
+.users-title {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Loading spinner */
+.users-loading {
+  padding: 3rem 0;
+}
+
+/* Empty state */
+.users-empty h4 {
+  color: #555;
+}
+
+/* Table styling */
+.users-table {
+  width: 90%;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.users-table-head th {
+  background: rgba(30, 30, 30, 0.85);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.users-table-body td,
+.users-table-body th {
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Row hover */
+.users-table-row:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transition: 0.3s ease;
+}
+
+/* Badges */
+.users-badge-admin {
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+}
+
+.users-badge-user {
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+}
+
+/* Cards for statistics */
+.users-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.users-card-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.users-card-text {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.users-stats{
+    width: 90%;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .users-table{
+        width: 90%;
+    }
+  .users-sidebar {
+    margin-bottom: 1.5rem;
+  }
+  .users-table td,
+  .users-table th {
+    padding: 0.6rem 0.3rem;
+    font-size: 0.85rem;
+  }
+  .users-card-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* Small device overrides (<576px) */
+@media (max-width: 576px) {
+  .users-table-responsive {
+    width: 90% ;
+ 
+  }
+  .user-table{
+    width: 100% !important;
+  }
+
+  .users-stats {
+    width: 70% !important;
+    margin: 1rem auto;
+  }
+
+  .users-title {
+    font-size: 1.2rem;
+  }
+
+  .users-card-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px){
+     .users-table-responsive {
+    width: 90% ;
+ 
+  }
+  .user-table{
+    width: 90% !important;
+  }
+
+  .users-stats {
+    width: 70% !important;
+    margin: 1rem auto;
+  }
+
+  .users-title {
+    font-size: 1.2rem;
+  }
+
+  .users-card-text {
+    font-size: 0.8rem;
+  }
+}

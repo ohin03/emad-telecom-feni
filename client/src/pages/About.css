@@ -1,0 +1,198 @@
+.about-page {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+.about-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1, #22d3ee);
+  padding: 80px 20px;
+}
+
+/* ===== GLASS BOX ===== */
+.glass-box {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+/* ===== WHO WE ARE (3 IMAGES) ===== */
+.about-images {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.about-images img {
+  width: 120px;
+  height: 290px;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.about-images img:hover {
+  transform: scale(1.08);
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-images {
+    justify-content: center;
+  }
+
+  .about-images img {
+    width: 100px;
+    height: 200px;
+  }
+}
+
+
+
+
+
+
+
+/* ===== HEAD ===== */
+.glass-box h1 {
+  text-align: center;
+  font-size: 2.3rem;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #f8fafc;
+}
+
+/* ===== INTRO ===== */
+.about-intro {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-intro img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+.about-intro h2 {
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.about-intro p {
+  line-height: 1.7;
+  color: #0f172a;
+}
+
+/* ===== FEATURES ===== */
+.about-features {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.feature-card svg {
+  font-size: 32px;
+  color: #0284c7;
+  margin-bottom: 10px;
+}
+
+.feature-card h3 {
+  margin-bottom: 8px;
+}
+
+/* ===== EXTRA ===== */
+.about-extra {
+  margin-top: 50px;
+}
+
+.about-extra h2 {
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.about-extra p {
+  line-height: 1.7;
+  color: #0f172a;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .glass-box {
+    padding: 30px 20px;
+  }
+
+  .glass-box h1 {
+    font-size: 1.8rem;
+  }
+}
+
+
+
+
+
+/* ===== REVIEWS ===== */
+.review-section {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.review-section h2 {
+  margin-bottom: 30px;
+  color: #0f172a;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 25px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
+
+.review-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.review-card h4 {
+  margin-bottom: 4px;
+}
+
+.stars {
+  color: #facc15;
+  margin-bottom: 10px;
+}
+
+.review-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}

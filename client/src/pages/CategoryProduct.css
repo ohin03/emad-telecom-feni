@@ -1,0 +1,77 @@
+/* ================= CATEGORY PRODUCT CARDS ================= */
+.category-page-body{
+  background: linear-gradient(135deg, #ff5f6d, #ffc371, #47cacc, #6a11cb);
+}
+.card {
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent glass */
+  backdrop-filter: blur(12px);          /* glass blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card .card-body {
+  color: black; /* text white for contrast */
+}
+
+.card .btn {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px; /* Fixed height */
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Responsive grid overrides */
+@media (max-width: 992px) {
+  .col-md-3 {
+    flex: 0 0 50%; /* tablet: 2 per row */
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .col-md-3 {
+    flex: 0 0 50%; /* mobile: 2 per row */
+    max-width: 50%;
+  }
+
+  .card .card-body {
+    padding: 8px;
+  }
+
+  .card img {
+    height: 150px; /* smaller image for mobile */
+  }
+
+  .card .card-title {
+    font-size: 0.9rem;
+  }
+
+  .card .card-text {
+    font-size: 0.75rem;
+  }
+
+  .card .btn {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+}
+
+/* Optional: Container padding for mobile */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

@@ -1,0 +1,131 @@
+/* ===== PROFILE PAGE GLASS STYLE ===== */
+.profile-page-body{
+     background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+}
+
+
+
+.profile-page {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 35px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  width: 90%;
+}
+
+/* Title */
+.profile-page h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+/* Glass card form */
+.profile-page form {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Inputs */
+.profile-page .form-control {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.profile-page .form-control:focus {
+  background: #fff;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.2);
+}
+
+/* Disabled email */
+.profile-page input[disabled] {
+  background-color: rgba(230, 230, 230, 0.8);
+  cursor: not-allowed;
+}
+
+/* Password */
+.profile-page .password-wrapper {
+  position: relative;
+}
+
+.profile-page .eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.75;
+}
+
+.profile-page .eye-icon:hover {
+  opacity: 1;
+}
+
+/* Button */
+.profile-page button {
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0d6efd, #4f8cff);
+  border: none;
+  transition: all 0.35s ease;
+}
+
+.profile-page button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(13, 110, 253, 0.4);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 22px;
+  }
+
+  .profile-page h1 {
+    font-size: 24px;
+  }
+
+  .profile-page form {
+    padding: 20px;
+  }
+
+
+.profile-menu-col {
+    margin-bottom: 80px; /* menu & form gap */
+  }
+
+  .profile-form-col {
+    margin-top: 0;
+  }
+
+
+
+}
+
+@media (max-width: 480px) {
+  .profile-page h1 {
+    font-size: 21px;
+  }
+
+  .profile-page .form-control {
+    font-size: 14px;
+    padding: 11px 13px;
+  }
+}

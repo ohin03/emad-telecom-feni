@@ -1,0 +1,70 @@
+/* ================= ADMIN PRODUCT CARDS ================= */
+.admin-products{
+     background: linear-gradient(135deg, #ff5f6d, #ffc371, #47cacc, #6a11cb);
+}
+.admin-product-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; /* spacing between cards */
+}
+
+.admin-product-card {
+  background: rgba(255, 255, 255, 0.1); /* glass effect */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.admin-product-card .card-body {
+  color: white; /* same as Category page */
+  padding: 14px;
+}
+
+.admin-product-card .card-title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.admin-product-card .card-text {
+  font-size: 0.85rem;
+}
+
+/* Image styling */
+.admin-product-card .card-img-top,
+.product-img-wrapper img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Tablet view (<992px) */
+@media (max-width: 992px) {
+  .admin-product-wrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row */
+  }
+}
+
+/* Mobile view (<480px) */
+@media (max-width: 480px) {
+  .admin-product-wrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row mobile */
+  }
+
+  .admin-product-card .card-title {
+    font-size: 0.9rem;
+  }
+
+  .admin-product-card .card-text {
+    font-size: 0.75rem;
+  }
+}

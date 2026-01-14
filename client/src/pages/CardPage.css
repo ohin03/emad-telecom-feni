@@ -1,0 +1,228 @@
+/* ===== FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
+
+
+.cart-page-container {
+  font-family: 'Poppins', sans-serif;
+  padding: 30px;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.cart-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.cart-header h1 {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cart-header h4 {
+  font-weight: 400;
+  color: #334155;
+}
+
+/* ===== CART CONTENT ===== */
+.cart-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ===== CART ITEMS ===== */
+.cart-items {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ===== CART CARD ===== */
+.cart-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex: 1 1 calc(50% - 10px); /* small device: 2 per row */
+  display: flex;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cart-card-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cart-card-details h4 {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cart-card-details p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.cart-card-details h5 {
+  margin: 5px 0;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.cart-card-details .btn-danger {
+  background: linear-gradient(135deg, #f43f5e, #f97316);
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cart-card-details .btn-danger:hover {
+  background: linear-gradient(135deg, #f87171, #fb923c);
+  transform: scale(1.05);
+}
+
+/* ===== CART SUMMARY ===== */
+.cart-summary {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #0f172a;
+  height: fit-content;
+  min-width: 250px;
+}
+
+.cart-summary h2 {
+  margin-bottom: 15px;
+}
+
+.cart-summary hr {
+  margin: 10px 0 15px 0;
+}
+
+.cart-summary .btn-primary,
+.cart-summary .btn-success {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.cart-summary .btn-primary:hover,
+.cart-summary .btn-success:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #34d399, #10b981);
+  box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
+}
+
+.cart-summary .btn-primary:disabled,
+.cart-summary .btn-success:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.total-section {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.address-section {
+  border: 1px solid #dee2e6;
+}
+
+.payment-section {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.payment-options .form-check-label {
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.payment-options .form-check-input {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+.cart-price {
+ font-family: 'Times New Roman', Times, serif;
+  font-weight: 400; /* normal */
+  font-size: 0.95rem;
+  color: #0f172a; /* normal text color */
+  margin: 5px 0;
+}
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .cart-content {
+    flex-direction: column;
+  }
+
+  .cart-items {
+    flex: 1;
+  }
+
+  .cart-card {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .cart-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+}
+
+/* Empty Cart */
+.empty-cart {
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-cart-icon {
+  font-size: 80px;
+  opacity: 0.5;
+}
+
+.empty-cart h3 {
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.empty-cart .btn-primary {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+}

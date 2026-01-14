@@ -1,0 +1,227 @@
+/* ================= PAGE ================= */
+.create-product-page {
+  min-height: 73vh;
+  padding: 24px;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: #e5e7eb;
+}
+
+/* Sidebar gap (mobile fix) */
+.admin-sidebar {
+  margin-bottom: 20px;
+}
+
+/* ================= WRAPPER ================= */
+.create-product-wrapper {
+  width: 100%;
+  max-width: 820px;
+}
+
+/* ================= TITLE ================= */
+.create-product-wrapper h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+/* ================= GLASS BACKGROUND ================= */
+.create-product-glass {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
+}
+
+/* ================= CARD ================= */
+.create-product-card-c{
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 14px;
+  padding: 26px;
+  width: 100%;       /* take full width of parent */
+  max-width: 600px;  /* desktop max width */
+  margin: auto;      /* center horizontally */
+  box-sizing: border-box; 
+}
+
+/* ================= INPUTS ================= */
+.create-product-card-c .form-control {
+  background: #020617;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+.create-product-card-c .form-control::placeholder {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.create-product-card-c .form-control:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+
+/* ================= SELECT ================= */
+.create-product-card-c .ant-select-selector {
+  background: #020617 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 10px !important;
+  height: 46px !important;
+}
+
+
+/* ================= UPLOAD ================= */
+.upload-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed #38bdf8;
+  color: #38bdf8;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.upload-btn:hover {
+  background: rgba(56, 189, 248, 0.1);
+}
+
+/* ================= IMAGE ================= */
+.img-preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ================= BUTTON ================= */
+.create-product-card-c .btn-primary {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+ .create-product-card-c .ant-select {
+    width: 100% !important;
+    display: block;
+    margin-bottom: 12px !important; /* consistent spacing */
+  }
+
+  .create-product-card-c .ant-select-single .ant-select-selector {
+    height: 46px !important;         /* match input height */
+    padding: 0 12px !important;      /* same horizontal padding */
+    display: flex !important;
+    align-items: center !important;  /* vertically center text */
+    border-radius: 10px !important;  /* same as input */
+    border: 1px solid #1e293b !important; /* match input border */
+    background: #020617 !important;  /* match input background */
+    font-size: 14px !important;
+    color: #e5e7eb !important;
+  }
+
+  .create-product-card-c .ant-select-arrow {
+    top: 50% !important;
+    transform: translateY(-50%) !important; /* vertically center arrow */
+  }
+
+  /* Placeholder color match input placeholder */
+  .create-product-card-c .ant-select-selection-placeholder {
+    color: #64748b !important;
+    font-size: 12px !important;
+  }
+
+  /* Adjust dropdown padding (optional, for consistent look) */
+  .create-product-card-c .ant-select-item-option-content {
+    font-size: 14px !important;
+  }
+
+  /* Consistent spacing for all fields */
+  .create-product-card-c .form-control,
+  .create-product-card-c .ant-select,
+  .create-product-card-c .upload-btn {
+    margin-bottom: 12px !important;
+  }
+
+.create-product-card-c{
+  width: 100% !important;
+}
+
+
+
+
+
+
+ .create-product-wrapper h1 {
+    text-align: center;
+    font-size: 22px;
+  }
+  .create-product-glass {
+    padding: 16px;
+    margin: 0 auto;
+    max-width: 95%;      /* almost full width on mobile */
+  }
+
+  .create-product-card {
+    padding: 18px;
+    width: 100%;         /* full width in mobile */
+    max-width: 100%;     /* override desktop max-width */
+  }
+
+
+
+
+ 
+ 
+}
+
+/* Order Cards */
+.order-card-admin {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.order-card-body {
+  color: #e5e7eb;
+}
+
+.product-item-admin {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.product-img-small {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.orders-list {
+  max-height: 80vh;
+  overflow-y: auto;
+}
