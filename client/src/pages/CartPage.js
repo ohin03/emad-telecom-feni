@@ -269,7 +269,7 @@ const placeOrder = async () => {
                 {(paymentMethod === "BKASH" || paymentMethod === "NAGAD") && (
                   <div className="alert alert-info mb-3">
                     <h6 className="mb-2">📱 Payment Instructions:</h6>
-                    <p className="mb-2">Send money to: <strong>01XXXXXXXXX</strong></p>
+                    <p className="mb-2">Send money to: <strong>01832-574007</strong></p>
                     <label className="form-label">Transaction ID:</label>
                     <input
                       type="text"
