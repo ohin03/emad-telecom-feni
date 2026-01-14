@@ -24,9 +24,10 @@ app.use(morgan("dev"));
 
 // server.js
 app.use(cors({
-  origin: ["https://emad-telecom-feni.onrender.com"], // frontend live URL
+  origin: ["https://emad-telecom-feni.vercel.app", "http://localhost:3000"],
   credentials: true
 }));
+
 
 // API routes
 app.use("/api/v1/auth", authRoutes);
