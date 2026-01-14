@@ -8,8 +8,6 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoute.js";
 import orderRoutes from "./routes/orderRoute.js";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 
 // configure env
 dotenv.config();
@@ -31,22 +29,9 @@ app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/order", orderRoutes);
 
-// ES Module __dirname fix
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve React frontend in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./client/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
-  });
-}
-
-// Default route (dev/test)
+// test route
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome to EMAD TELECOM</h1>");
+  res.send("<h1>EMAD TELECOM Backend is running 🚀</h1>");
 });
 
 // PORT
@@ -55,6 +40,6 @@ const PORT = process.env.PORT || 8081;
 // run listen
 app.listen(PORT, () => {
   console.log(
-    `Server Running on ${process.env.DEV_MODE || "development"} mode on port: http://localhost:${PORT}`.bgCyan.white
+    `Server running on port ${PORT}`.bgCyan.white
   );
 });
