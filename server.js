@@ -21,7 +21,12 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors());
+
+// server.js
+app.use(cors({
+  origin: ["https://emad-telecom-feni.onrender.com"], // frontend live URL
+  credentials: true
+}));
 
 // API routes
 app.use("/api/v1/auth", authRoutes);
