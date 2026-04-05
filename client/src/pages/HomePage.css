@@ -405,23 +405,7 @@
   100% { background-position: 0% 50%; }
 }
 
-.HomePage {
-  min-height: 100vh;
-  position: relative;
 
-  /* Soft pastel rainbow gradient */
-  background: linear-gradient(270deg, 
-    #ffb3ba,  /* Light Pink */
-    #ffdfba,  /* Light Peach */
-    #ffffba,  /* Soft Yellow */
-    #baffc9,  /* Mint Green */
-    #bae1ff,  /* Light Blue */
-    #e0baff   /* Lavender */
-  );
-
-  background-size: 1600% 1600%;  /* Smooth animation */
-  animation: rainbowShift 30s ease infinite;  /* Slow, relaxing movement */
-}
 
 .HomePage h1, .HomePage p {
   color: #1e293b; /* Soft dark text for contrast */
