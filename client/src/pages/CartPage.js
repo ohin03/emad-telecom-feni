@@ -1,312 +1,208 @@
-import React, { useState } from "react"; 
-import Layout from "../components/Layout/Layout"; 
-import { useCart } from "../context/cart"; 
-import { useAuth } from "../context/auth"; 
-import { useNavigate } from "react-router-dom"; 
+import React, { useState } from "react";
+import Layout from "../components/Layout/Layout";
+import { useCart } from "../context/cart";
+import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AiOutlineDelete, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { BsBagCheck, BsShieldCheck } from "react-icons/bs";
+import { MdOutlineLocationOn, MdPayment } from "react-icons/md";
 
-import "./CardPage.css"; 
+import "./CardPage.css";
 
-const CartPage = () => { 
-  const [auth] = useAuth(); 
-  const [cart, setCart] = useCart(); 
-  const [paymentMethod, setPaymentMethod] = useState("COD"); // COD, BKASH, NAGAD
+const CartPage = () => {
+  const [auth] = useAuth();
+  const [cart, setCart] = useCart();
+  const [paymentMethod, setPaymentMethod] = useState("COD");
   const [trxId, setTrxId] = useState("");
-  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // total price considering quantity
   const totalPrice = () => {
     try {
-      let total = 0;
-      cart?.forEach((item) => {
-        const qty = Number(item.quantity || 1);
-        total += Number(item.price) * qty;
-      });
+      let total = cart?.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
       return total;
     } catch (error) {
-      console.log(error);
       return 0;
-    }
-  }; 
-
-  // remove item 
-  const removeCartItem = (pid) => { 
-    try { 
-      let myCart = [...cart]; 
-      let index = myCart.findIndex((item) => item._id === pid); 
-      myCart.splice(index, 1); 
-      setCart(myCart); 
-      localStorage.setItem("cart", JSON.stringify(myCart)); 
-    } catch (error) { 
-      console.log(error); 
-    } 
-  }; 
-
-  // update quantity for an item in cart
-  const updateQuantity = (pid, qty) => {
-    try {
-      const quantity = Math.max(1, Number(qty) || 1);
-      const newCart = cart.map((item) =>
-        item._id === pid ? { ...item, quantity } : item
-      );
-      setCart(newCart);
-      localStorage.setItem("cart", JSON.stringify(newCart));
-    } catch (e) {
-      console.log(e);
     }
   };
 
-  // Place order
-const placeOrder = async () => {
-  try {
-    if (!cart?.length) return toast.error(" Your cart is empty!");
-    if (!auth?.user?.address) return toast.error("Please update your address before placing an order!");
+  const removeCartItem = (pid) => {
+    let myCart = cart.filter((item) => item._id !== pid);
+    setCart(myCart);
+    localStorage.setItem("cart", JSON.stringify(myCart));
+    toast.success("Item removed");
+  };
 
-    if ((paymentMethod === "BKASH" || paymentMethod === "NAGAD") && !trxId) {
-      return toast.error("Please provide the transaction ID for mobile payment!");
-    }
-
-    // Format products with quantity
-    const formattedProducts = cart.map((item) => ({
-      _id: item._id,
-      quantity: Number(item.quantity || 1),
-    }));
-
-    const { data } = await axios.post(
-      "/api/v1/order/place-order",
-      {
-        products: formattedProducts,
-        paymentMethod,
-        trxId: paymentMethod !== "COD" ? trxId : null,
-        address: auth?.user?.address,
-        totalAmount: totalPrice(),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
+  const updateQuantity = (pid, type) => {
+    const newCart = cart.map((item) => {
+      if (item._id === pid) {
+        let newQty = type === "inc" ? (item.quantity || 1) + 1 : (item.quantity || 1) - 1;
+        return { ...item, quantity: Math.max(1, newQty) };
       }
-    );
+      return item;
+    });
+    setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+  };
 
-    if (data?.success) {
-      toast.success("Order placed successfully!");
-      setCart([]); 
-      localStorage.removeItem("cart");
-      navigate("/dashboard/user/orders");
+  const placeOrder = async () => {
+    try {
+      setLoading(true);
+      const formattedProducts = cart.map((item) => ({
+        _id: item._id,
+        quantity: Number(item.quantity || 1),
+      }));
+
+      const { data } = await axios.post(
+        "/api/v1/order/place-order",
+        {
+          products: formattedProducts,
+          paymentMethod,
+          trxId: paymentMethod !== "COD" ? trxId : null,
+          address: auth?.user?.address,
+          totalAmount: totalPrice(),
+        },
+        { headers: { Authorization: `Bearer ${auth?.token}` } }
+      );
+
+      if (data?.success) {
+        setCart([]);
+        localStorage.removeItem("cart");
+        navigate("/dashboard/user/orders");
+        toast.success("Order placed successfully!");
+      }
+    } catch (error) {
+      toast.error("Order failed!");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.log(error.response?.data || error.message);
-    toast.error("Order failed!");
-  }
-};
+  };
 
-
-  return ( 
-   
-    <Layout> 
-      <div className="cart-page-container"> 
-        <div className="cart-header"> 
-          <h1>Hello {auth?.token ? auth?.user?.name : "Guest"}</h1> 
-          <h4> 
-            {cart?.length 
-              ? `You have ${cart.length} items in your cart ${ auth?.token ? "" : " | Please log in to checkout. " }` 
-              : "Your cart is empty"} 
-          </h4> 
-        </div> 
-
-        <div className="cart-content">
-          <div className="cart-items cart-row">
-            {cart?.length === 0 ? (
-              <div className="empty-cart text-center w-100">
-                <div className="empty-cart-icon mb-3">🛒</div>
-                <h3>Your cart is empty</h3>
-                <p className="text-muted">Add some products to your cart to continue shopping</p>
-                <button 
-                  className="btn btn-primary mt-3"
-                  onClick={() => navigate('/')}
-                >
-                  Continue Shopping
-                </button>
-              </div>
-            ) : (
-              cart?.map((p) => (
-                <div className="cart-card" key={p._id}>
-                  <div className="cart-card-image">
-                    <img src={`/api/v1/product/product-photo/${p._id}`} alt={p.name} />
-                  </div>
-                  <div className="cart-card-details">
-                    <h4>{p.name}</h4>
-                    <p>{p.description?.substring(0, 30)}...</p>
-                    <div className="d-flex align-items-end gap-3 mb-3">
-  <div>
-    <small className="text-muted">Unit Price</small>
-    <h5 className="mb-0">{p.price} TK</h5>
-  </div>
-
-  <div className="ms-auto d-flex flex-column">
-    <label className="form-label mb-1 text-end">Total product</label>
-    <input
-      type="number"
-      min="1"
-      className="form-control"
-      style={{ width: 90 }}
-      value={p.quantity || 1}
-      onChange={(e) => updateQuantity(p._id, e.target.value)}
-    />
-  </div>
-</div>
-
-                    <div className="d-flex justify-content-between align-items-center">
-                      <strong className='p-3'> Subtotal: {Number(p.price) * Number(p.quantity || 1)} TK</strong>
-                      <button className="btn btn-danger" onClick={() => removeCartItem(p._id)}>
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
+  return (
+    <Layout>
+      <div className="cart-main-wrapper">
+        <div className="container py-5">
+          {/* Progress Step (Visual Guide) */}
+          <div className="cart-stepper mb-5 d-none d-md-flex">
+            <div className="step active"><span>1</span> Cart Items</div>
+            <div className="step-line"></div>
+            <div className="step active"><span>2</span> Checkout Details</div>
+            <div className="step-line"></div>
+            <div className="step"><span>3</span> Success</div>
           </div>
 
-          {cart?.length > 0 && (
-            <div className="cart-summary">
-              <h2 className="text-center mb-4">Checkout</h2>
-              <hr />
-              
-              {/* Total Price */}
-              <div className="total-section mb-4">
-                <div className="d-flex justify-content-between align-items-center">
-                  <h4 className="mb-0">Total Amount:</h4>
-                  <h3 className="mb-0 text-primary fw-bold">{totalPrice()} TK</h3>
-                </div>
-              </div>
-
-            {/* Address Section */}
-            {!auth?.token ? (
-              <div className="alert alert-warning mb-3">
-                <p className="mb-2">⚠️ Please login to place order</p>
-                <button 
-                  className="btn btn-warning w-100" 
-                  onClick={() => navigate('/login', {state: '/cart'})}
-                >
-                  Login to Continue
-                </button>
-              </div>
-            ) : !auth?.user?.address ? (
-              <div className="alert alert-danger mb-3">
-                <p className="mb-2">⚠️ Address is required to place order</p>
-                <button 
-                  className="btn btn-danger w-100" 
-                  onClick={() => navigate('/dashboard/user/profile')}
-                >
-                  Add Address
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="address-section mb-3 p-3 bg-light rounded">
-                  <h5 className="mb-2">📍 Delivery Address:</h5>
-                  <p className="mb-2">{auth?.user?.address}</p>
-                  <button 
-                    className="btn btn-sm btn-outline-secondary" 
-                    onClick={() => navigate('/dashboard/user/profile')}
-                  >
-                    Update Address
-                  </button>
-                </div>
-
-                {/* Payment Method */}
-                <div className="payment-section mb-3">
-                  <h5 className="mb-3">💳 Payment Method:</h5>
-                  <div className="payment-options">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="cod"
-                        value="COD"
-                        checked={paymentMethod === "COD"}
-                        onChange={() => setPaymentMethod("COD")}
-                      />
-                      <label className="form-check-label" htmlFor="cod">
-                        💵 Cash on Delivery (COD)
-                      </label>
-                    </div>
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="bkash"
-                        value="BKASH"
-                        checked={paymentMethod === "BKASH"}
-                        onChange={() => setPaymentMethod("BKASH")}
-                      />
-                      <label className="form-check-label" htmlFor="bkash">
-                        📱 bKash
-                      </label>
-                    </div>
-                    <div className="form-check mb-3">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymentMethod"
-                        id="nagad"
-                        value="NAGAD"
-                        checked={paymentMethod === "NAGAD"}
-                        onChange={() => setPaymentMethod("NAGAD")}
-                      />
-                      <label className="form-check-label" htmlFor="nagad">
-                        📱 Nagad
-                      </label>
-                    </div>
+          <div className="row g-4">
+            {/* Left side: Cart Items */}
+            <div className="col-lg-8">
+              <div className="glass-card p-4">
+                <h4 className="fw-bold mb-4">Shopping Cart ({cart?.length || 0} Items)</h4>
+                <hr />
+                {cart?.length === 0 ? (
+                  <div className="text-center py-5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png" alt="empty" width="120" className="mb-3 opacity-50" />
+                    <h5 className="text-muted">Your cart is feeling lonely!</h5>
+                    <button className="btn btn-primary rounded-pill px-4 mt-3" onClick={() => navigate("/")}>Go Shopping</button>
                   </div>
-                </div>
-
-                {/* Mobile Payment Instruction */}
-                {(paymentMethod === "BKASH" || paymentMethod === "NAGAD") && (
-                  <div className="alert alert-info mb-3">
-                    <h6 className="mb-2">📱 Payment Instructions:</h6>
-                    <p className="mb-2">Send money to: <strong>01832-574007</strong></p>
-                    <label className="form-label">Transaction ID:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Enter Transaction ID"
-                      value={trxId}
-                      onChange={(e) => setTrxId(e.target.value)}
-                      required
-                    />
-                  </div>
+                ) : (
+                  cart.map((p) => (
+                    <div className="cart-item-row" key={p._id}>
+                      <div className="item-img">
+                        <img src={`/api/v1/product/product-photo/${p._id}`} alt={p.name} />
+                      </div>
+                      <div className="item-info">
+                        <h6 className="fw-bold text-dark mb-1">{p.name}</h6>
+                        <p className="text-muted small mb-2">{p.description?.substring(0, 40)}...</p>
+                        <div className="qty-price-flex">
+                          <div className="qty-counter">
+                            <button onClick={() => updateQuantity(p._id, "dec")}><AiOutlineMinus /></button>
+                            <span>{p.quantity || 1}</span>
+                            <button onClick={() => updateQuantity(p._id, "inc")}><AiOutlinePlus /></button>
+                          </div>
+                          <h6 className="price-tag mb-0">{p.price} TK</h6>
+                        </div>
+                      </div>
+                      <div className="item-actions">
+                        <button className="delete-btn" onClick={() => removeCartItem(p._id)}><AiOutlineDelete /></button>
+                        <p className="fw-bold text-primary mt-2 d-none d-md-block">{(p.price * (p.quantity || 1))} TK</p>
+                      </div>
+                    </div>
+                  ))
                 )}
-
-                {/* Place Order Button */}
-                <button 
-                  className="btn btn-success btn-lg w-100 mt-3 fw-bold" 
-                  onClick={placeOrder}
-                  disabled={!cart?.length}
-                  style={{
-                    padding: "15px",
-                    fontSize: "18px",
-                    boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
-                  }}
-                >
-                  ✅ Place Order Now
-                </button>
-                <p className="text-center text-muted mt-2 small">
-                  Click to confirm your order
-                </p>
-              </>
-            )}
+              </div>
             </div>
-          )}
-        </div> 
-      </div> 
-    </Layout> 
-   
-  ); 
-}; 
+
+            {/* Right side: Summary & Payment */}
+            <div className="col-lg-4">
+              <div className="glass-card p-4 sticky-top" style={{ top: "100px" }}>
+                <h5 className="fw-bold mb-4">Order Summary</h5>
+                  <span className="text-warning  ">Delivery: FREE (inside Feni-Sadar),</span> 
+                  <span className="text-warning "> 130 TK (Outside Feni)</span>
+                <div className="summary-row">
+                  <span>Subtotal</span>
+                  <span>{totalPrice()} TK</span>
+                </div>
+                <div className="summary-row">
+                  <span>Delivery Fee</span>
+                  <span className="text-success fw-bold ">FREE (inside Feni-Sadar)</span>
+             
+                </div>
+                <hr />
+                <div className="summary-row total mb-4">
+                  <span className="fw-bold">Total Amount</span>
+                  <span className="fw-bold text-primary fs-4">{totalPrice()} TK</span>
+                </div>
+
+                {!auth?.token ? (
+                  <button className="btn btn-warning w-100 py-3 rounded-3" onClick={() => navigate("/login", { state: "/cart" })}>Login to Checkout</button>
+                ) : (
+                  <>
+                    <div className="checkout-section mb-4">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <h6 className="mb-0 fw-bold"><MdOutlineLocationOn /> Address</h6>
+                        <button className="btn btn-sm text-primary p-0" onClick={() => navigate("/dashboard/user/profile")}>Change</button>
+                      </div>
+                      <div className="address-pill">{auth?.user?.address || "No address added yet!"}</div>
+                    </div>
+
+                    <div className="payment-method-box mb-4">
+                      <h6 className="fw-bold mb-3"><MdPayment /> Payment Method</h6>
+                      <div className={`pay-option ${paymentMethod === "COD" ? "active" : ""}`} onClick={() => setPaymentMethod("COD")}>
+                        <input type="radio" checked={paymentMethod === "COD"} readOnly />
+                        <span>Cash on Delivery</span>
+                      </div>
+                      <div className={`pay-option ${paymentMethod === "BKASH" ? "active" : ""}`} onClick={() => setPaymentMethod("BKASH")}>
+                        <input type="radio" checked={paymentMethod === "BKASH"} readOnly />
+                        <span>bKash (Personal)</span>
+                      </div>
+                    </div>
+
+                    {paymentMethod === "BKASH" && (
+                      <div className="animate__animated animate__fadeIn mb-3">
+                        <div className="alert alert-primary py-2 px-3 small">
+                          Send Money: <strong>01832-574007</strong>
+                        </div>
+                        <input type="text" className="form-control mb-2" placeholder="Enter Transaction ID" value={trxId} onChange={(e) => setTrxId(e.target.value)} />
+                      </div>
+                    )}
+
+                    <button className="btn btn-primary w-100 py-3 rounded-3 fw-bold shadow-sm" disabled={!cart.length || loading} onClick={placeOrder}>
+                      {loading ? "Processing..." : <>Confirm Order <BsBagCheck className="ms-2" /></>}
+                    </button>
+                  </>
+                )}
+                
+                <div className="trust-footer mt-4 text-center">
+                  <p className="text-muted small"><BsShieldCheck className="text-success" /> Secure SSL Checkout</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
 export default CartPage;
