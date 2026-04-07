@@ -1,33 +1,162 @@
-/* Mobile navbar responsive fixes */
-.navbar-toggler {
-  border: none !important;
-  box-shadow: none !important;
+/* --- Global Navbar Fix --- */
+.custom-navbar {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  padding: 10px 0;
+  transition: 0.3s;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.navbar-toggler:focus {
-  outline: none;
-  box-shadow: none;
+.navbar-scrolled {
+  padding: 6px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-.offcanvas-close-btn{
-  width:38px;
-  height:38px;
-  font-size:18px;
-  font-weight:700;
-  position:absolute;
-  top:5px;
-  right:12px;
-  z-index:10;
-  transition:0.3s;
+/* --- Logo Alignment (Fixed) --- */
+.logo-box {
+  background: #2563eb;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.offcanvas-close-btn:hover{
-  background:rgb(195, 97, 97);
-  color:#fff !important;
-  transform: rotate(90deg) scale(1.05);
+.brand-name {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.5px;
+  color: #0f172a;
+  line-height: 1; /* Removes vertical extra space */
+  display: flex;
+  align-items: center;
 }
 
-/* Offcanvas body top margin to avoid navbar overlap */
-.offcanvas-body {
-  margin-top: 20px; /* extra spacing inside body if needed */
+/* --- Mobile Icons Alignment (Fixed) --- */
+.m-action-icon, .m-menu-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.m-action-icon {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.m-menu-btn {
+  background: #1e293b;
+  color: white;
+}
+
+/* Ant Badge alignment fix */
+.ant-badge {
+  display: flex !important;
+  align-items: center;
+}
+
+/* --- Desktop Nav Links --- */
+.nav-link-pro {
+  color: #64748b;
+  font-weight: 600;
+  padding: 8px 12px !important;
+  font-size: 14px;
+}
+
+.nav-link-pro:hover, .active { color: #2563eb !important; }
+
+.login-pill {
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.user-pill {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cart-pill {
+  background: #1e293b;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* --- Mobile Menu Styles --- */
+.m-canvas {
+  width: 290px !important;
+  border-radius: 0 20px 20px 0 !important;
+}
+
+.close-btn-pro {
+  background: #f1f5f9;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.m-nav-item {
+  display: block;
+  padding: 14px 20px;
+  color: #334155;
+  font-weight: 600;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.m-nav-item.active {
+  background: #f1f7ff;
+  border-left-color: #2563eb;
+  color: #2563eb;
+}
+
+.m-arrow { font-size: 9px; transition: 0.3s; opacity: 0.5; }
+.m-arrow.open { transform: rotate(180deg); }
+
+.m-sub-link {
+  display: block;
+  padding: 10px 45px;
+  color: #64748b;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+
+/* Animations */
+.animate-up { animation: fadeInUp 0.3s ease; }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Small Screen Fix --- */
+@media (max-width: 400px) {
+  .brand-name { font-size: 0.95rem; }
+  .logo-box { width: 30px; height: 30px; }
 }
