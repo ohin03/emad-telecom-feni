@@ -1,98 +1,226 @@
-.policy-page {
-  font-family: "Poppins", sans-serif;
-  background: #f7fafa;
-}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
-/* HERO */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 300px;
+.policy-page-final {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #fcfdfe;
   overflow: hidden;
 }
 
-.hero-img {
-  width: 100%;
-  height: auto;       
-  display: block;
+/* --- ULTRA MODERN HERO SECTION --- */
+.policy-hero-gradient {
+  position: relative;
+  background: linear-gradient(135deg, #0f172a 0%, #0fb9b1 100%);
+  padding: 130px 0 100px;
+  color: white;
+  overflow: hidden;
 }
 
-
-/* CONTENT */
-.policy-content {
-  padding: 70px 12%;
-  display: grid;
-  gap: 30px;
+.hero-flex-pro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
 }
 
-/* POLICY CARD */
-.policy-card {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+.hero-title-final {
+  font-size: 3.8rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-top: 15px;
 }
 
-.policy-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 40px rgba(15, 185, 177, 0.25);
-}
-
-.policy-card h2 {
+.hero-title-final span {
   color: #0fb9b1;
-  margin-bottom: 12px;
 }
 
-.policy-card p,
-.policy-card li {
-  color: #444;
-  line-height: 1.8;
+.hero-sub-final {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 10px;
+}
+
+.trust-badge-pro {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 20px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* FLOATING ICONS */
+.hero-visual-pro {
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+
+.floating-icon {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 30px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: float 4s infinite ease-in-out;
+}
+
+.icon-1 { top: 0; left: 100px; animation-delay: 0s; }
+.icon-2 { bottom: 50px; left: 0; animation-delay: 1s; }
+.icon-3 { bottom: 10px; right: 0; animation-delay: 2s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* BACKGROUND DECORATIVE BLOBS */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 1;
+}
+.blob-1 { width: 300px; height: 300px; background: rgba(15, 185, 177, 0.2); top: -100px; left: -50px; }
+.blob-2 { width: 350px; height: 350px; background: rgba(37, 99, 235, 0.15); bottom: -50px; right: -50px; }
+
+/* --- CONTENT SECTION --- */
+.policy-content-final {
+  margin-top: -60px;
+  padding-bottom: 80px;
+  position: relative;
+  z-index: 20;
+}
+
+/* POLICY CARDS */
+.policy-card-final {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 25px;
+  border: 1px solid #f1f5f9;
+  transition: all 0.4s ease;
+}
+
+.policy-card-final:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  border-color: #0fb9b1;
+}
+
+.shadow-teal-glow:hover {
+  box-shadow: 0 25px 50px rgba(15, 185, 177, 0.2);
+}
+
+.card-head-pro {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card-icon-pro {
+  font-size: 30px;
+  color: #0fb9b1;
+}
+
+.policy-card-final h4 {
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.policy-card-final p {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* CHECK LIST */
+.pro-check-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.pro-check-list li {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pro-check-list li svg { color: #0fb9b1; }
+
+/* GLASS TERMS BOX */
+.glass-terms-box {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  border-radius: 30px;
+  border: 1px solid white;
+}
+
+.text-teal { color: #0fb9b1; }
+
+.glass-terms-box p {
+  color: #64748b;
   font-size: 15px;
 }
 
-.policy-card ul {
-  padding-left: 18px;
+/* CONTACT BANNER */
+.pro-contact-banner {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 25px;
+  border-left: 5px solid #0fb9b1;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.03);
 }
 
-/* TABLET */
-@media (max-width: 768px) {
-  .hero {
-    height: 240px;
-  }
-
-  .hero-overlay h1 {
-    font-size: 28px;
-  }
-
-  .hero-overlay p {
-    font-size: 14px;
-  }
-
-  .policy-content {
-    padding: 40px 8%;
-  }
+.support-badge {
+  font-size: 40px;
+  color: #0fb9b1;
 }
 
-/* MOBILE */
-@media (max-width: 480px) {
-  .hero {
-    height: auto; /* important */
-  }
+.text-pro-box h4 { font-weight: 800; color: #1e293b; }
+.text-pro-box p { color: #64748b; margin: 0; }
 
-  .hero-img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .policy-content {
-  padding: 12px 5% 28px;
+.pro-btn-final {
+  background: #0fb9b1;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: 0.3s;
 }
 
+.pro-btn-final:hover { background: #079992; transform: scale(1.05); }
 
-  .policy-card {
-    padding: 20px;
-  }
+/* MOBILE FIX */
+@media (max-width: 991px) {
+  .hero-flex-pro { flex-direction: column; text-align: center; }
+  .hero-title-final { font-size: 2.5rem; }
+  .hero-visual-pro { width: 100%; height: 200px; }
+  .floating-icon { width: 50px; height: 50px; font-size: 20px; }
+  .icon-1 { top: 30px; left: 20px; }
+  .icon-2 { bottom: 20px; left: unset; right: 20px; }
+  .icon-3 { display: none; }
+  .policy-content-final { margin-top: 0; padding: 20px 20px 60px; }
+  .pro-check-list { grid-template-columns: 1fr; }
 }
-

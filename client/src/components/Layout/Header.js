@@ -48,7 +48,7 @@ const Header = () => {
               <FaShopify size={20} />
             </div>
             <span className="brand-name">
-              EMAD <span className="text-primary"> TELECOM</span>
+              EMAD - <span className="text-primary"> TELECOM</span>
             </span>
           </Link>
 
