@@ -160,3 +160,53 @@
   .brand-name { font-size: 0.95rem; }
   .logo-box { width: 30px; height: 30px; }
 }
+
+
+
+
+
+
+
+
+/* ===== FIX OFFCANVAS UNDER NAVBAR ===== */
+@media (max-width: 991px) {
+
+  .m-canvas {
+    top: 60px !important;          /* navbar height অনুযায়ী */
+    height: calc(100vh - 60px); 
+     /* full screen নিচ পর্যন্ত */
+  }
+
+}
+
+
+/* ===== OFFCANVAS HEADER PERFECT ALIGN ===== */
+.m-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left-right edge */
+  padding: 16px 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* title full left */
+.offcanvas-title {
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* close button full right */
+.close-btn-pro {
+  background: #f1f5f9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto; /* push fully right */
+}

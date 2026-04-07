@@ -126,16 +126,16 @@ const Header = () => {
 
       {/* --- MOBILE MENU --- */}
       <div className="offcanvas offcanvas-start m-canvas" id="mobileOffcanvas" tabIndex="-1">
-        <div className="offcanvas-header border-bottom py-3">
-          <h5 className="offcanvas-title fw-bold">Main Menu</h5>
-          <button type="button" className="close-btn-pro" onClick={closeOffcanvas}>✕</button>
-        </div>
+       <div className="offcanvas-header m-header">
+  <h5 className="offcanvas-title"> Menu</h5>
+  <button type="button " className="close-btn-pro text-bg-danger" onClick={closeOffcanvas}>✕</button>
+</div>
         <div className="offcanvas-body p-0">
           <div className="p-3 bg-light border-bottom"><SearchInput /></div>
           <div className="m-nav-container">
-            <NavLink to="/" className="m-nav-item" onClick={closeOffcanvas}>Home</NavLink>
+            <NavLink to="/" className="m-nav-item text-info" onClick={closeOffcanvas}>Home</NavLink>
             <div className="m-accordion">
-              <div className="m-nav-item d-flex justify-content-between align-items-center" onClick={() => setMobileCategoryOpen(!mobileCategoryOpen)}>
+              <div className="m-nav-item d-flex justify-content-between align-items-center text-info" onClick={() => setMobileCategoryOpen(!mobileCategoryOpen)}>
                 <span>Categories</span>
                 <span className={`m-arrow ${mobileCategoryOpen ? 'open' : ''}`}>▼</span>
               </div>
@@ -151,12 +151,12 @@ const Header = () => {
             {!auth?.user ? (
               <div className="p-3 mt-3 d-grid gap-2">
                 <NavLink to="/login" className="btn btn-primary rounded-3" onClick={closeOffcanvas}>Login</NavLink>
-                <NavLink to="/register" className="btn btn-outline-secondary rounded-3" onClick={closeOffcanvas}>Register</NavLink>
+                <NavLink to="/register" className="btn btn-outline-secondary rounded-3 text-info" onClick={closeOffcanvas}>Register</NavLink>
               </div>
             ) : (
               <div className="mt-4 pt-3 border-top">
                 <p className="px-3 text-muted x-small fw-bold">ACCOUNT</p>
-                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="m-nav-item" onClick={closeOffcanvas}>Dashboard</NavLink>
+                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="m-nav-item text-info" onClick={closeOffcanvas}>Dashboard</NavLink>
                 <div className="m-nav-item text-danger" onClick={() => {handleLogout(); closeOffcanvas();}}>Logout</div>
               </div>
             )}
