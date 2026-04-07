@@ -218,3 +218,86 @@
   width: 93%;
 }
 }
+
+
+
+
+
+
+
+
+/* Mobile view adjustments for sidebar menu */
+@media (max-width: 768px) {
+  .user-menu {
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* ------------------ USER MENU STYLING ------------------ */
+.user-menu {
+  background-color: #fff; /* clean white background */
+  
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.user-menu h4 {
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+  color: #0d6efd; /* primary blue heading */
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 5px;
+}
+
+.user-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-menu ul li {
+  margin-bottom: 12px;
+}
+
+.user-menu ul li a {
+  text-decoration: none;
+  color: #495057;
+  display: block;
+  padding:0px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.user-menu ul li a:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.user-menu ul li a.active {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+/* ------------------ MOBILE ADJUSTMENTS ------------------ */
+@media (max-width: 768px) {
+  .user-menu {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}

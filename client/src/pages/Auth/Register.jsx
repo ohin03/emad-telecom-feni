@@ -5,138 +5,123 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './Register.css';
 
-
-
-
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-   const [answer, setAnswer] = useState('');
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
+    // ক্যালকুলেট করছি কতটুকু ফর্ম পূরণ হয়েছে (Visual Progress)
+    const calculateProgress = () => {
+        const fields = [name, email, password, phone, address, answer];
+        const filledFields = fields.filter(f => f !== '').length;
+        return (filledFields / fields.length) * 100;
+    };
 
-  // form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('/api/v1/auth/register', {
-        name,
-        email,
-        password,
-        phone,
-        address,
-        answer,
-      });
-      if (res && res.data.success) {
-        toast.success(res.data.message);
-        navigate('/login');
-      } else {
-        toast.error(res.data.message || 'Registration failed');
-      }
-    } catch (error) {
-      console.error('Register error:', error);
-      // Show backend-provided message when available, otherwise a helpful network message
-      if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
-      } else if (error.request && !error.response) {
-        toast.error('Cannot connect to backend. Start the server at http://localhost:8080');
-      } else {
-        toast.error(error.message || 'Something went wrong');
-      }
-    }
-    
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('/api/v1/auth/register', {
+                name, email, password, phone, address, answer,
+            });
+            if (res?.data?.success) {
+                toast.success(res.data.message);
+                navigate('/login');
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Registration error');
+        }
+    };
 
+    return (
+        <Layout title="Create Account - Emad Telecom">
+            <div className="register-elite-wrapper">
+                <div className="auth-container">
+                    {/* Left Side: Visual Branding (Pro Look) */}
+                    <div className="auth-visual-side d-none d-lg-flex">
+                        <div className="visual-content">
+                            <div className="pulse-circle"></div>
+                            <h2>Create your new account</h2>
+                            <p>Create your account for buying our products and stay with us</p>
+                            <div className="feature-tags">
+                                <span>⚡ Fast</span>
+                                <span>🔒 Secure</span>
+                                <span>📊 Analytics</span>
+                            </div>
+                        </div>
+                    </div>
 
-  return (
-    <Layout title="Register - Emad Telecom">
-      <div className=" register-page ">
-        <h1 className="text-center mb-4">Register</h1>
+                    {/* Right Side: Form */}
+                    <div className="auth-form-side">
+                        <div className="form-inner">
+                            <div className="form-header">
+                                <h1>Get Started</h1>
+                                <p>Fill in your details to create an account</p>
+                                <div className="progress-container">
+                                    <div className="progress-bar-fill" style={{ width: `${calculateProgress()}%` }}></div>
+                                </div>
+                            </div>
 
-        <form onSubmit={handleSubmit} className="col-md-6 mx-auto">
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter Your Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
+                            <form onSubmit={handleSubmit} className="elite-form">
+                                <div className="input-row">
+                                    <div className="custom-field">
+                                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} required placeholder=" " />
+                                        <label>Full Name</label>
+                                        <span className="focus-border"></span>
+                                    </div>
+                                    <div className="custom-field">
+                                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder=" " />
+                                        <label>Email Address</label>
+                                        <span className="focus-border"></span>
+                                    </div>
+                                </div>
 
-          <div className="mb-3">
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Enter Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+                                <div className="input-row">
+                                    <div className="custom-field password-group">
+                                        <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required placeholder=" " />
+                                        <label>Password</label>
+                                        <span className="focus-border"></span>
+                                        <button type="button" className="eye-btn" onClick={() => setShowPassword(!showPassword)}>
+                                            {showPassword ? "🙈" : "👁️"}
+                                        </button>
+                                    </div>
+                                    <div className="custom-field">
+                                        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required placeholder=" " />
+                                        <label>Phone Number</label>
+                                        <span className="focus-border"></span>
+                                    </div>
+                                </div>
 
+                                <div className="custom-field">
+                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} required placeholder=" " />
+                                    <label>Security Answer (Favorite Sport?)</label>
+                                    <span className="focus-border"></span>
+                                </div>
 
+                                <div className="custom-field">
+                                    <textarea value={address} onChange={(e) => setAddress(e.target.value)} required placeholder=" " rows="1"></textarea>
+                                    <label>Home Address</label>
+                                    <span className="focus-border"></span>
+                                </div>
 
-
-        <div className="mb-3 password-wrapper">
-         <input
-          type={showPassword ? "text" : "password"}
-          className="form-control"
-          placeholder="Enter Your Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-      <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "🙈" : "👁️"}
-       </span>
-      </div>
-
-        
-          <div className="mb-3">
-            <input
-              type="tel"
-              className="form-control"
-              placeholder="Enter Your Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter Your Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-
-           <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="What is you favorite sports?"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary w-100">
-            Register
-          </button>
-        </form>
-      </div>
-    </Layout>
-  );
+                                <button type="submit" className="elite-submit-btn">
+                                    <span>Create Account</span>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+                                </button>
+                            </form>
+                            <p className="footer-text">Already a member? <span onClick={() => navigate('/login')}>Login</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    );
 };
 
 export default Register;
-

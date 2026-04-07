@@ -148,12 +148,18 @@ const Order = () => {
   return (
     <Layout title={"Your Orders"}>
       <div className="order-page-body">
+         <div className="col-md-3 col-12 mb-3 p-3">
+  <div className="user-menu">
+    <UserMenu />
+  </div>
+</div>
         <div className="container-fluid p-3 m-3">
+       
           <div className="row">
-            <div className="col-md-3">
-              <UserMenu />
-            </div>
-            <div className="col-md-9">
+           <div className="col-md-3 ">
+    
+</div>
+            <div className="col-md-8">
               <h1 className="text-center mb-4 text-danger p-3">Your Orders</h1>
 
               {loading ? (

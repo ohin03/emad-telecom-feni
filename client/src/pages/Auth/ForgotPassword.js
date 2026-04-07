@@ -9,95 +9,98 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [answer, setAnswer] = useState('');
-    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-  
+    const navigate = useNavigate();
 
-    //from submit
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('/api/v1/auth/forgot-password', { 
-        email,
-        newPassword,
-        answer, 
-      });
-      if (res && res.data.success) {
-        toast.success(res.data.message);
-        
-        
-        navigate('/login');
-      } else {
-        toast.error(res.data.message || 'Login failed');
-      }
-    } catch (error) {
-      console.error('Register error:', error);
-      // Show backend-provided message when available, otherwise a helpful network message
-      if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
-      } else if (error.request && !error.response) {
-        toast.error('Cannot connect to backend. Start the server at http://localhost:8080');
-      } else {
-        toast.error(error.message || 'Something went wrong');
-      }
-    }
-    
-  };
-  return (
-    <Layout>
-       <div className="forgot-password-page">
-     <div className="forgot-password - Emad Telecom ">
-        <h1 className="text-center mb-4 text-danger ">RESET PASSWORD</h1>
+        e.preventDefault();
+        try {
+            const res = await axios.post('/api/v1/auth/forgot-password', {
+                email,
+                newPassword,
+                answer,
+            });
+            if (res && res.data.success) {
+                toast.success(res.data.message);
+                navigate('/login');
+            } else {
+                toast.error(res.data.message || 'Reset failed');
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Something went wrong');
+        }
+    };
 
-        <form onSubmit={handleSubmit} className="col-md-6 mx-auto">
-        
-          <div className="mb-3">
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Enter Your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+    return (
+        <Layout title="Reset Password - Emad Telecom">
+            <div className="forgot-ultra-container">
+                <div className="forgot-glass-card">
+                    <div className="forgot-header text-center">
+                        <div className="reset-icon">🛡️</div>
+                        <h2 className='text-success'>Reset Password</h2>
+                        <p className="text-muted ">Verify your identity to secure your account</p>
+                    </div>
 
-           <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter your favorite sport name"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              required
-            />
-          </div>
+                    <form onSubmit={handleSubmit} className="forgot-form mt-4">
+                        <div className="premium-field">
+                            <label className='text-black'>Registered Email</label>
+                            <div className="input-group-premium">
+                                <span className="field-icon">📧</span>
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
 
+                        <div className="premium-field mt-3">
+                            <label className='text-black'>Security Question</label>
+                            <div className="input-group-premium">
+                                <span className="field-icon">⚽</span>
+                                <input
+                                    type="text"
+                                    placeholder="Your favorite sport name?"
+                                    value={answer}
+                                    onChange={(e) => setAnswer(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
 
-        <div className="mb-3 password-wrapper">
-         <input
-          type={showPassword ? "text" : "password"}
-          className="form-control"
-          placeholder="Enter Your New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
+                        <div className="premium-field mt-3">
+                            <label className='text-black'>New Secure Password</label>
+                            <div className="input-group-premium">
+                                <span className="field-icon">🔑</span>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required
+                                />
+                                <span className="eye-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? "🙈" : "👁️"}
+                                </span>
+                            </div>
+                        </div>
 
-      <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "🙈" : "👁️"}
-       </span>
-      </div>
+                        <button type="submit" className="btn-reset-premium mt-4">
+                            Update Password
+                        </button>
 
- 
-          <button type="submit" className="btn btn-primary w-100">
-            Reset
-          </button>
-        </form>
-      </div>
-      </div>
-    </Layout>
-  )
-}
+                        <div className="text-center mt-4">
+                            <span className="back-login-btn" onClick={() => navigate('/login')}>
+                                ← Back to Login
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </Layout>
+    );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

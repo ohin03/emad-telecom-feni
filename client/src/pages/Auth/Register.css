@@ -1,131 +1,175 @@
-/* ===== REGISTER PAGE FULL SCREEN BACKGROUND ===== */
-.register-page {
-  background: radial-gradient(circle at top, #0f2027, #203a43, #000);
-  min-height: 73vh; /* full viewport height */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* top aligned */
-  padding: 30px;
-  font-family: 'Poppins', sans-serif;
+/* Full Page Wrapper */
+.register-elite-wrapper {
+    background: #b1b4ba;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
-/* ===== HEADING ===== */
-.register-page h1 {
-  color: #00eaff;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-shadow: 0 0 12px rgba(0, 234, 255, 0.6);
-  margin-top: 30px;
-  text-align: center;
+/* Main Auth Container */
+.auth-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 650px;
+    border-radius: 30px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== FORM BOX ===== */
-.register-page form.col-md-6 {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.18),
-    rgba(255, 255, 255, 0.05)
-  );
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 35px 30px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-  transition: all 0.4s ease;
-  width: 100%;
-  max-width: 450px;
+/* Left Branding Side */
+.auth-visual-side {
+    flex: 1;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-/* ===== INPUT BASE ===== */
-.register-page form .form-control {
-  background: rgba(0, 0, 0, 0.55) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #00eaff;
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 20px;
-  transition: all 0.25s ease;
+.visual-content h2 { font-size: 42px; font-weight: 800; margin-bottom: 20px; }
+.visual-content p { font-size: 18px; opacity: 0.8; margin-bottom: 40px; }
+
+.feature-tags span {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 18px;
+    border-radius: 50px;
+    margin-right: 10px;
+    font-size: 13px;
+    backdrop-filter: blur(5px);
 }
 
-.register-page form .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.25); /* হালকা placeholder */
-  font-size: 12px;
-  letter-spacing: 0.4px;
+/* Right Form Side */
+.auth-form-side {
+    flex: 1.2;
+    background: #fff;
+    padding: 60px;
+    display: flex;
+    align-items: center;
 }
 
-.register-page form .form-control:focus {
-  background: rgba(0, 0, 0, 0.65) !important;
-  border-color: #00eaff;
-  box-shadow: 0 0 0 3px rgba(0, 234, 255, 0.35);
-  outline: none;
+.form-inner { width: 100%; }
+
+.form-header h1 { font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 5px; }
+.form-header p { color: #64748b; margin-bottom: 30px; }
+
+/* Progress Bar */
+.progress-container {
+    height: 4px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    overflow: hidden;
 }
 
-.register-page form .form-control:focus::placeholder {
-  color: rgba(255, 255, 255, 0.18); /* focus হলে fade */
+.progress-bar-fill {
+    height: 100%;
+    background: #2563eb;
+    transition: width 0.4s ease;
 }
 
-.register-page form .form-control:not(:focus) {
-  background: rgba(0, 0, 0, 0.55) !important;
+/* Custom Input Field (The SaaS Look) */
+.custom-field {
+    position: relative;
+    margin-bottom: 25px;
 }
 
-/* ===== AUTOFILL FIX ===== */
-.register-page input:-webkit-autofill,
-.register-page input:-webkit-autofill:hover,
-.register-page input:-webkit-autofill:focus,
-.register-page textarea:-webkit-autofill {
-  -webkit-text-fill-color: #ffffff !important;
-  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.65) inset !important;
-  transition: background-color 9999s ease-in-out 0s;
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-/* ===== PASSWORD WRAPPER ===== */
-.password-wrapper {
-  position: relative;
+.custom-field input, .custom-field textarea {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 2px solid #e2e8f0;
+    outline: none;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    transition: 0.3s;
 }
 
-.password-wrapper input {
-  padding-right: 48px;
+.custom-field label {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    color: #94a3b8;
+    pointer-events: none;
+    transition: 0.3s;
 }
 
-.eye-icon {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #ffffff;        
-  font-size: 18px;
-  z-index: 2;
+/* Animation on Focus */
+.custom-field input:focus ~ label,
+.custom-field input:not(:placeholder-shown) ~ label,
+.custom-field textarea:focus ~ label,
+.custom-field textarea:not(:placeholder-shown) ~ label {
+    top: -15px;
+    font-size: 12px;
+    color: #2563eb;
+    font-weight: 700;
 }
 
-.eye-icon:hover {
-  color: #00eaff;
+.focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #2563eb;
+    transition: 0.4s;
 }
 
-/* ===== BUTTON ===== */
-.register-page form button.btn-primary {
-  background: linear-gradient(135deg, #00eaff, #007bff);
-  border: none;
-  padding: 12px;
-  font-weight: 600;
-  border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(0, 234, 255, 0.5);
-  transition: all 0.35s ease;
+.custom-field input:focus ~ .focus-border,
+.custom-field textarea:focus ~ .focus-border {
+    width: 100%;
 }
 
-.register-page form button.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(0, 123, 255, 0.7);
+/* Submit Button */
+.elite-submit-btn {
+    width: 100%;
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    transition: 0.3s;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 576px) {
-  .register-page form.col-md-6 {
-    padding: 25px 20px;
-  }
+.elite-submit-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+.eye-btn {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.footer-text { text-align: center; margin-top: 30px; color: #64748b; font-size: 14px; }
+.footer-text span { color: #2563eb; font-weight: 700; cursor: pointer; }
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+    .auth-container { max-width: 500px; }
+    .auth-form-side { padding: 40px; }
+    .input-row { grid-template-columns: 1fr; gap: 0; }
 }
