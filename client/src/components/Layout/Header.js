@@ -51,8 +51,8 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* MOBILE ICONS */}
-          <div className="d-flex align-items-center gap-3 d-lg-none ms-auto me-3">
+          {/* MOBILE ICONS AND MENU TOGGLER */}
+          <div className="d-flex align-items-center gap-3 d-lg-none ms-auto">
             <Badge count={cart?.length} showZero offset={[5, 0]}>
               <NavLink to="/cart" className="mobile-action-link">
                 <AiOutlineShoppingCart size={26} />
@@ -64,17 +64,17 @@ const Header = () => {
                 <AiOutlineUser size={24} />
               </NavLink>
             )}
-          </div>
 
-          {/* MENU TOGGLER */}
-          <button
-            className="navbar-toggler border-0 shadow-none p-0"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#mobileOffcanvas"
-          >
-            <AiOutlineMenu size={28} className="text-dark" />
-          </button>
+            {/* MENU TOGGLER */}
+            <button
+              className="navbar-toggler border-0 shadow-none p-0"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileOffcanvas"
+            >
+              <AiOutlineMenu size={28} className="text-dark" />
+            </button>
+          </div>
 
           {/* DESKTOP NAV */}
           <div className="collapse navbar-collapse">

@@ -1,12 +1,11 @@
-/* Menu icon positioning on mobile */
+/* Mobile navbar responsive fixes */
 .navbar-toggler {
-  position: relative;
-  z-index: 1041;
-  margin-left: auto !important;
-  order: 3;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .navbar-toggler:focus {
+  outline: none;
   box-shadow: none;
 }
 
