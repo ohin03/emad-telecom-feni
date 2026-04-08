@@ -4,6 +4,7 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FaUsers, FaUserShield, FaUserTag, FaCalendarAlt, FaAddressCard, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Users.css";
 
 const Users = () => {
@@ -11,122 +12,212 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Get all users
+  // --- Pagination States ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10); 
+
   const getAllUsers = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get("/api/v1/auth/all-users", {
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
+        headers: { Authorization: `Bearer ${auth?.token}` },
       });
-      if (data?.success) {
-        setUsers(data.users);
-      }
+      if (data?.success) setUsers(data.users);
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to load users");
+      toast.error("Failed to fetch user database");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (auth?.token) {
-      getAllUsers();
-    }
+    if (auth?.token) getAllUsers();
   }, [auth?.token]);
 
+  // --- Pagination Logic ---
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // পেজ চেঞ্জ হলে উপরে স্ক্রল হবে
+  };
+
   return (
-    <div className="users-body">
-    <Layout title={"Dashboard - All Users"}>
-      <div className="users-page-container container-fluid m-3 p-3">
-        <div className="users-page-row row">
-          <div className="users-sidebar col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="users-content col-md-9">
-            <h1 className="users-title text-center mb-4">All Users</h1>
-            {loading ? (
-              <div className="users-loading text-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
+    <Layout title="System Management - All Users">
+      <div className="users-pro-container">
+        <div className="container-fluid py-4 px-lg-4">
+          <div className="row g-4">
+            <div className="col-lg-3">
+              <div className="sticky-top" style={{ top: "90px" }}>
+                <AdminMenu />
+              </div>
+            </div>
+
+            <div className="col-lg-9">
+              {/* Stats Cards (আগের মতোই) */}
+              <div className="row g-3 mb-4">
+                <div className="col-md-4 col-6">
+                  <div className="stat-card-pro total">
+                    <div className="stat-icon"><FaUsers /></div>
+                    <div className="stat-info">
+                      <h3>{users?.length || 0}</h3>
+                      <p>Total Database</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4 col-6">
+                  <div className="stat-card-pro admins">
+                    <div className="stat-icon"><FaUserShield /></div>
+                    <div className="stat-info">
+                      <h3>{users?.filter(u => u.role === 1).length || 0}</h3>
+                      <p>System Admins</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4 col-12 d-none d-md-block">
+                  <div className="stat-card-pro active-users">
+                    <div className="stat-icon"><FaUserTag /></div>
+                    <div className="stat-info">
+                      <h3>{users?.filter(u => u.role === 0).length || 0}</h3>
+                      <p>Regular Clients</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ) : users?.length === 0 ? (
-              <div className="users-empty text-center">
-                <h4>No users found</h4>
-              </div>
-            ) : (
-              <div className="users-table-responsive table-responsive">
-                <table className="users-table table table-striped table-hover">
-                  <thead className="users-table-head table-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Role</th>
-                      <th scope="col">Registered</th>
-                    </tr>
-                  </thead>
-                  <tbody className="users-table-body">
-                    {users?.map((user, index) => (
-                      <tr key={user._id} className="users-table-row">
-                        <th scope="row">{index + 1}</th>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.phone}</td>
-                        <td>
-                          {typeof user.address === "string"
-                            ? user.address
-                            : user.address?.street || "N/A"}
-                        </td>
-                        <td>
-                          {user.role === 1 ? (
-                            <span className="users-badge-admin badge bg-danger">
-                              Admin
-                            </span>
-                          ) : (
-                            <span className="users-badge-user badge bg-primary">
-                              User
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {new Date(user.createdAt).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            <div className="users-stats mt-4">
-              <div className="users-card card">
-                <div className="users-card-body card-body">
-                  <h5 className="users-card-title card-title">Statistics</h5>
-                  <p className="users-card-text card-text">
-                    <strong>Total Users:</strong> {users?.length || 0}
-                  </p>
-                  <p className="users-card-text card-text">
-                    <strong>Admins:</strong>{" "}
-                    {users?.filter((u) => u.role === 1).length || 0}
-                  </p>
-                  <p className="users-card-text card-text">
-                    <strong>Regular Users:</strong>{" "}
-                    {users?.filter((u) => u.role === 0).length || 0}
-                  </p>
+
+              <div className="users-list-wrapper shadow-sm">
+                <div className="list-header-pro">
+                  <h5 className="m-0 fw-bold">User Directory</h5>
+                  <button className="refresh-btn" onClick={getAllUsers}>Sync Data</button>
                 </div>
+
+                {loading ? (
+                  <div className="pro-loader text-center py-5">
+                    <div className="spinner-grow text-primary" role="status"></div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="table-responsive d-none d-md-block">
+                      <table className="table users-table-pro align-middle">
+                        <thead>
+                          <tr>
+                            <th>Identity</th>
+                            <th>Contact Details</th>
+                            <th>Location</th>
+                            <th>Privilege</th>
+                            <th>Joined</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentUsers?.map((u) => (
+                            <tr key={u._id}>
+                              <td>
+                                <div className="d-flex align-items-center gap-3">
+                                  <div className="user-avatar-pro">
+                                    {u.name.charAt(0).toUpperCase()}
+                                  </div>
+                                  <div>
+                                    <div className="u-name">{u.name}</div>
+                                    <div className="u-id">ID: {u._id.substring(18)}</div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="u-email">{u.email}</div>
+                                <div className="u-phone">{u.phone}</div>
+                              </td>
+                              <td>
+                                <div className="u-address">
+                                  <FaAddressCard className="me-1 text-muted"/>
+                                  {typeof u.address === "string" ? u.address : u.address?.street || "Feni, BD"}
+                                </div>
+                              </td>
+                              <td>
+                                <span className={`role-badge ${u.role === 1 ? 'admin' : 'user'}`}>
+                                  {u.role === 1 ? "Administrator" : "Client"}
+                                </span>
+                              </td>
+                              <td>
+                                <div className="u-date">
+                                  <FaCalendarAlt className="me-1"/>
+                                  {new Date(u.createdAt).toLocaleDateString()}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Mobile View */}
+                    <div className="d-md-none p-2">
+                      {currentUsers?.map((u) => (
+                        <div key={u._id} className="user-mobile-card mb-3">
+                          <div className="d-flex justify-content-between align-items-start mb-2">
+                             <div className="d-flex align-items-center gap-2">
+                                <div className="user-avatar-pro small">{u.name.charAt(0)}</div>
+                                <h6 className="m-0 fw-bold">{u.name}</h6>
+                             </div>
+                             <span className={`role-badge sm ${u.role === 1 ? 'admin' : 'user'}`}>
+                                {u.role === 1 ? "Admin" : "User"}
+                             </span>
+                          </div>
+                          <div className="mobile-info-grid">
+                            <p><strong>Email:</strong> {u.email}</p>
+                            <p><strong>Phone:</strong> {u.phone}</p>
+                            <p><strong>Joined:</strong> {new Date(u.createdAt).toLocaleDateString()}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* --- Pro Pagination Footer --- */}
+                    <div className="pro-pagination-footer">
+                      <div className="pagination-info d-none d-sm-block">
+                        Showing {indexOfFirstUser + 1} to {Math.min(indexOfLastUser, users.length)} of {users.length}
+                      </div>
+                      <div className="pagination-btns">
+                        <button 
+                          className="p-btn prev"
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          <FaChevronLeft />
+                        </button>
+
+                        <div className="p-numbers d-none d-md-flex">
+                          {Array.from({ length: totalPages }, (_, i) => (
+                            <button 
+                              key={i + 1}
+                              className={`p-num-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                              onClick={() => handlePageChange(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                        </div>
+
+                        <button 
+                          className="p-btn next"
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                        >
+                          <FaChevronRight />
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
     </Layout>
-    </div>
   );
 };
 
 export default Users;
-

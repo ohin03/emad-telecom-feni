@@ -28,7 +28,9 @@ const Orders = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [courierService, setCourierService] = useState("");
   const [commentTexts, setCommentTexts] = useState({});
-
+// PAGINATION STATE (ADD ONLY)
+const [currentPage, setCurrentPage] = useState(1);
+const ordersPerPage = 5;
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get("/api/v1/order/all-orders", {
@@ -162,7 +164,28 @@ const Orders = () => {
     if (method === "NAGAD") return "Nagad";
     return method;
   };
+// PAGINATION LOGIC (ADD ONLY)
+const indexOfLastOrder = currentPage * ordersPerPage;
+const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
 
+// new order already top e ase so direct slice korbo
+const paginatedOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+const nextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+const prevPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
   return (
     <Layout title="Dashboard - Orders">
       <div className="orders-admin-page container-fluid m-3 p-3">
@@ -184,226 +207,256 @@ const Orders = () => {
                 <h4>No orders found</h4>
               </div>
             ) : (
-              <div className="orders-admin-list">
-                {orders.map((order) => (
-                  <div key={order._id} className={`orders-admin-card mb-3 ${order.orderStatus === "Cancelled" ? "cancelled" : ""}`}
->
-                    {/* Header */}
-                    <div className="orders-admin-card-header">
-                      <div>
-                        <h5>Order #{order._id.slice(-8).toUpperCase()}</h5>
-                        <small className="orders-admin-text-muted">
-                          {new Date(order.createdAt).toLocaleString()}
-                        </small>
-                      </div>
-                      <div>
-                        <span
-                          className={`orders-admin-badge ${
-                            order.orderStatus === "Delivered"
-                              ? "orders-admin-badge-success"
-                              : order.orderStatus === "Shipped"
-                              ? "orders-admin-badge-info"
-                              : "orders-admin-badge-warning"
-                          }`}
-                        >
-                          {order.orderStatus}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Body */}
-                    <div className="orders-admin-card-body">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <p>
-                            <strong>Customer:</strong> {order.user?.name || "N/A"}
-                          </p>
-                          <p>
-                            <strong>Email:</strong> {order.user?.email || "N/A"}
-                          </p>
-                          <p>
-                            <strong>Phone:</strong> {order.user?.phone || "N/A"}
-                          </p>
-                          <p>
-                            <strong>Address:</strong> {order.address}
-                          </p>
+              <>
+                <div className="orders-admin-list">
+                  {paginatedOrders.map((order) => (
+                    <div
+                      key={order._id}
+                      className={`orders-admin-card mb-3 ${
+                        order.orderStatus === "Cancelled" ? "cancelled" : ""
+                      }`}
+                    >
+                      {/* Header */}
+                      <div className="orders-admin-card-header">
+                        <div>
+                          <h5>Order #{order._id.slice(-8).toUpperCase()}</h5>
+                          <small className="orders-admin-text-muted">
+                            {new Date(order.createdAt).toLocaleString()}
+                          </small>
                         </div>
-                        <div className="col-md-6">
-                          <p>
-                            <strong>Payment Method:</strong>{" "}
-                            {getPaymentMethodLabel(order.paymentMethod)}
-                          </p>
-                          <p>
-                            <strong>Payment Status:</strong>{" "}
-                            <select
-                              className="orders-admin-select d-inline-block ms-2"
-                              value={order.paymentStatus}
-                              onChange={(e) =>
-                                handlePaymentStatusChange(order._id, e.target.value)
-                              }
-                            >
-                              {paymentStatusOptions.map((opt) => (
-                                <option key={opt} value={opt}>
-                                  {opt}
-                                </option>
-                              ))}
-                            </select>
-                          </p>
-                          {order.paymentMethod !== "COD" && (
+                        <div>
+                          <span
+                            className={`orders-admin-badge ${
+                              order.orderStatus === "Delivered"
+                                ? "orders-admin-badge-success"
+                                : order.orderStatus === "Shipped"
+                                ? "orders-admin-badge-info"
+                                : "orders-admin-badge-warning"
+                            }`}
+                          >
+                            {order.orderStatus}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Body */}
+                      <div className="orders-admin-card-body">
+                        <div className="row">
+                          <div className="col-md-6">
                             <p>
-                              <strong>Transaction ID:</strong>{" "}
-                              {order.paymentMethod === "BKASH"
-                                ? order.bkashTrxId
-                                : order.nagadTrxId}
+                              <strong>Customer:</strong> {order.user?.name || "N/A"}
                             </p>
-                          )}
-                          <p>
-                            <strong>Total Amount:</strong> {order.totalAmount} TK
-                          </p>
-                          {order.orderStatus === "Cancelled" && order.cancelled && (
-                            <div className="orders-admin-cancelled-info mt-2 p-2 border rounded bg-light">
-                              <small className="orders-admin-cancelled-by d-block">
-                                Cancelled by: {order.cancelled.by?.name || order.cancelled.role}
-                              </small>
-                              <small className="orders-admin-cancelled-date d-block">
-                                On: {new Date(order.cancelled.at).toLocaleString()}
-                              </small>
+                            <p>
+                              <strong>Email:</strong> {order.user?.email || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Phone:</strong> {order.user?.phone || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Address:</strong> {order.address}
+                            </p>
+                          </div>
+                          <div className="col-md-6">
+                            <p>
+                              <strong>Payment Method:</strong>{" "}
+                              {getPaymentMethodLabel(order.paymentMethod)}
+                            </p>
+                            <p>
+                              <strong>Payment Status:</strong>{" "}
+                              <select
+                                className="orders-admin-select d-inline-block ms-2"
+                                value={order.paymentStatus}
+                                onChange={(e) =>
+                                  handlePaymentStatusChange(order._id, e.target.value)
+                                }
+                              >
+                                {paymentStatusOptions.map((opt) => (
+                                  <option key={opt} value={opt}>
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                            </p>
+                            {order.paymentMethod !== "COD" && (
+                              <p>
+                                <strong>Transaction ID:</strong>{" "}
+                                {order.paymentMethod === "BKASH"
+                                  ? order.bkashTrxId
+                                  : order.nagadTrxId}
+                              </p>
+                            )}
+                            <p>
+                              <strong>Total Amount:</strong> {order.totalAmount} TK
+                            </p>
+                            {order.orderStatus === "Cancelled" && order.cancelled && (
+                              <div className="orders-admin-cancelled-info mt-2 p-2 border rounded bg-light">
+                                <small className="orders-admin-cancelled-by d-block">
+                                  Cancelled by: {order.cancelled.by?.name || order.cancelled.role}
+                                </small>
+                                <small className="orders-admin-cancelled-date d-block">
+                                  On: {new Date(order.cancelled.at).toLocaleString()}
+                                </small>
+                                <div>
+                                  <strong>Reason:</strong> {order.cancelled.reason}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Products */}
+                        <div className="orders-admin-products mt-3">
+                          {order.products?.map((item, idx) => (
+                            <div key={idx} className="orders-admin-product-item">
+                              <img
+                                src={`/api/v1/product/product-photo/${item.product?._id}`}
+                                alt={item.product?.name}
+                                className="orders-admin-product-img"
+                                onError={(e) => {
+                                  e.target.src = "https://via.placeholder.com/50";
+                                }}
+                              />
                               <div>
-                                <strong>Reason:</strong> {order.cancelled.reason}
+                                <div className="orders-admin-product-name">
+                                  {item.product?.name || "Product removed"}
+                                </div>
+                                <small>
+                                  Qty: {item.quantity} × {item.product?.price || 0} TK
+                                </small>
                               </div>
                             </div>
-                          )}
+                          ))}
                         </div>
-                      </div>
 
-                      {/* Products */}
-                      <div className="orders-admin-products mt-3">
-                        {order.products?.map((item, idx) => (
-                          <div key={idx} className="orders-admin-product-item">
-                            <img
-                              src={`/api/v1/product/product-photo/${item.product?._id}`}
-                              alt={item.product?.name}
-                              className="orders-admin-product-img"
-                              onError={(e) => {
-                                e.target.src = "https://via.placeholder.com/50";
+                        {/* Shipping Tracking */}
+                        {order.orderStatus === "Shipped" && order.trackingNumber && (
+                          <div className="orders-admin-tracking mt-3 p-2 bg-info bg-opacity-10 rounded">
+                            <strong>📦 Shipping Tracking:</strong>
+                            <div>
+                              <strong>Courier:</strong> {order.courierService}
+                            </div>
+                            <div>
+                              <strong>Tracking Number:</strong> {order.trackingNumber}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Order Status Update */}
+                        <div className="orders-admin-status-update mt-3">
+                          <label>
+                            <strong>Update Order Status:</strong>
+                          </label>
+                          <select
+                            className="orders-admin-select"
+                            value={order.orderStatus}
+                            onChange={(e) =>
+                              handleOrderStatusChange(order._id, e.target.value)
+                            }
+                          >
+                            {orderStatusOptions.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Comments Section */}
+                        <div className="orders-admin-comments mt-3">
+                          <div className="orders-admin-comments-header">
+                            <h6>💬 Order Communication</h6>
+                            <span>Chat with admin</span>
+                          </div>
+                          <div className="orders-admin-comments-list">
+                            {(order.comments || []).length > 0 ? (
+                              order.comments.map((c, idx) => (
+                                <div
+                                  key={idx}
+                                  className={`orders-admin-comment-bubble ${
+                                    c.role === "admin"
+                                      ? "orders-admin-comment-admin"
+                                      : "orders-admin-comment-user"
+                                  }`}
+                                >
+                                  <div className="orders-admin-bubble-header">
+                                    <span className="orders-admin-bubble-author">
+                                      {c.author?.name || (c.role === "admin" ? "Admin" : "You")}
+                                    </span>
+                                    <span className="orders-admin-bubble-time">
+                                      {new Date(c.createdAt).toLocaleString()}
+                                    </span>
+                                  </div>
+                                  <div className="orders-admin-bubble-text">{c.text}</div>
+                                </div>
+                              ))
+                            ) : (
+                              <div className="orders-admin-no-comments">
+                                No messages yet. Start the conversation 👋
+                              </div>
+                            )}
+                          </div>
+                          <div className="orders-admin-comment-input-box">
+                            <input
+                              type="text"
+                              className="orders-admin-comment-input"
+                              placeholder="Type your message..."
+                              value={commentTexts[order._id] || ""}
+                              onChange={(e) =>
+                                setCommentTexts({ ...commentTexts, [order._id]: e.target.value })
+                              }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") addComment(order._id);
                               }}
                             />
-                            <div>
-                              <div className="orders-admin-product-name">
-                                {item.product?.name || "Product removed"}
-                              </div>
-                              <small>
-                                Qty: {item.quantity} × {item.product?.price || 0} TK
-                              </small>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Shipping Tracking */}
-                      {order.orderStatus === "Shipped" && order.trackingNumber && (
-                        <div className="orders-admin-tracking mt-3 p-2 bg-info bg-opacity-10 rounded">
-                          <strong>📦 Shipping Tracking:</strong>
-                          <div>
-                            <strong>Courier:</strong> {order.courierService}
-                          </div>
-                          <div>
-                            <strong>Tracking Number:</strong> {order.trackingNumber}
+                            <button
+                              className="orders-admin-comment-send-btn"
+                              onClick={() => addComment(order._id)}
+                            >
+                              ➤
+                            </button>
                           </div>
                         </div>
-                      )}
 
-                      {/* Order Status Update */}
-                      <div className="orders-admin-status-update mt-3">
-                        <label>
-                          <strong>Update Order Status:</strong>
-                        </label>
-                        <select
-                          className="orders-admin-select"
-                          value={order.orderStatus}
-                          onChange={(e) =>
-                            handleOrderStatusChange(order._id, e.target.value)
-                          }
-                        >
-                          {orderStatusOptions.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
+                        {/* Cancel Button */}
+                        {!["Delivered", "Cancelled"].includes(order.orderStatus) && (
+                          <div className="orders-admin-cancel-btn mt-3 text-end">
+                            <button
+                              className="btn btn-outline-danger"
+                              onClick={() => cancelOrder(order._id)}
+                            >
+                              Cancel Order
+                            </button>
+                          </div>
+                        )}
                       </div>
-
-                      {/* Comments Section */}
-                      <div className="orders-admin-comments mt-3">
-                        <div className="orders-admin-comments-header">
-                          <h6>💬 Order Communication</h6>
-                          <span>Chat with admin</span>
-                        </div>
-                        <div className="orders-admin-comments-list">
-                          {(order.comments || []).length > 0 ? (
-                            order.comments.map((c, idx) => (
-                              <div
-                                key={idx}
-                                className={`orders-admin-comment-bubble ${
-                                  c.role === "admin"
-                                    ? "orders-admin-comment-admin"
-                                    : "orders-admin-comment-user"
-                                }`}
-                              >
-                                <div className="orders-admin-bubble-header">
-                                  <span className="orders-admin-bubble-author">
-                                    {c.author?.name || (c.role === "admin" ? "Admin" : "You")}
-                                  </span>
-                                  <span className="orders-admin-bubble-time">
-                                    {new Date(c.createdAt).toLocaleString()}
-                                  </span>
-                                </div>
-                                <div className="orders-admin-bubble-text">{c.text}</div>
-                              </div>
-                            ))
-                          ) : (
-                            <div className="orders-admin-no-comments">
-                              No messages yet. Start the conversation 👋
-                            </div>
-                          )}
-                        </div>
-                        <div className="orders-admin-comment-input-box">
-                          <input
-                            type="text"
-                            className="orders-admin-comment-input"
-                            placeholder="Type your message..."
-                            value={commentTexts[order._id] || ""}
-                            onChange={(e) =>
-                              setCommentTexts({ ...commentTexts, [order._id]: e.target.value })
-                            }
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") addComment(order._id);
-                            }}
-                          />
-                          <button
-                            className="orders-admin-comment-send-btn"
-                            onClick={() => addComment(order._id)}
-                          >
-                            ➤
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Cancel Button */}
-                      {!["Delivered", "Cancelled"].includes(order.orderStatus) && (
-                        <div className="orders-admin-cancel-btn mt-3 text-end">
-                          <button
-                            className="btn btn-outline-danger"
-                            onClick={() => cancelOrder(order._id)}
-                          >
-                            Cancel Order
-                          </button>
-                        </div>
-                      )}
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                {/* PAGINATION UI */}
+                {orders.length > ordersPerPage && (
+                  <div className="orders-admin-pagination mt-4 mb-5">
+  <button
+    className="btn btn-outline-primary prev-btn"
+    onClick={prevPage}
+    disabled={currentPage === 1}
+  >
+    ← Prev
+  </button>
+
+  <span className="page-info">
+    Page {currentPage} of {totalPages}
+  </span>
+
+  <button
+    className="btn btn-outline-primary next-btn"
+    onClick={nextPage}
+    disabled={currentPage === totalPages}
+  >
+    Next →
+  </button>
+</div>
+                )}
+              </>
             )}
           </div>
         </div>

@@ -5,13 +5,13 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import { FaCloudUploadAlt, FaCube, FaPlusSquare, FaTrash } from "react-icons/fa";
 import "./CreateProduct.css";
 
 const { Option } = Select;
 
 const CreateProduct = () => {
   const navigate = useNavigate();
-
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -21,7 +21,6 @@ const CreateProduct = () => {
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
 
-  // get categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
@@ -35,10 +34,8 @@ const CreateProduct = () => {
     getAllCategory();
   }, []);
 
-  // create product
   const handleCreate = async (e) => {
     e.preventDefault();
-
     const productData = new FormData();
     productData.append("name", name);
     productData.append("description", description);
@@ -49,10 +46,7 @@ const CreateProduct = () => {
     productData.append("shipping", shipping);
 
     try {
-      const { data } = await axios.post(
-        "/api/v1/product/create-product",
-        productData
-      );
+      const { data } = await axios.post("/api/v1/product/create-product", productData);
       if (data?.success) {
         toast.success("Product created successfully");
         navigate("/dashboard/admin/products");
@@ -63,109 +57,149 @@ const CreateProduct = () => {
   };
 
   return (
-    <Layout title="Dashboard - Create Product">
-      <div className="create-product-page container-fluid">
-        <div className="row">
+    <Layout title="Inventory - Create Product">
+      <div className="admin-pro-container">
+        <div className="container-fluid py-4">
+          <div className="row g-4">
+            
+            {/* Sidebar Section */}
+            <div className="col-lg-3 col-md-4">
+              <div className="sidebar-sticky-pro">
+                <AdminMenu />
+              </div>
+            </div>
 
-          {/* Sidebar */}
-          <div className="col-12 col-md-3 admin-sidebar">
-            <AdminMenu />
-          </div>
+            {/* Main Content */}
+            <div className="col-lg-9 col-md-8">
+              <div className="product-form-card shadow-lg">
+                <div className="form-header-pro mb-4">
+                  <div className="header-icon-pro">
+                    <FaPlusSquare />
+                  </div>
+                  <div className="header-text">
+                    <h2>Add New Product</h2>
+                    <p>Enter details to update Emad Telecom inventory</p>
+                  </div>
+                </div>
 
-          {/* Content */}
-          <div className="col-12 col-md-9 d-flex justify-content-center">
-            <div className="create-product-wrapper">
-
-              <h1>Create Product</h1>
-
-              {/* GLASS FORM */}
-              <div className="create-product-glass">
-                <div className="create-product-card-c">
-
-                  <Select
-                    size="large"
-                    placeholder="Select category"
-                    className="form-select mb-3"
-                    onChange={(value) => setCategory(value)}
-                  >
-                    {categories?.map((c) => (
-                      <Option key={c._id} value={c._id}>
-                        {c.name}
-                      </Option>
-                    ))}
-                  </Select>
-
-                  <label className="btn upload-btn mb-3">
-                    {photo ? photo.name : "Upload Product Photo"}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) => setPhoto(e.target.files[0])}
-                    />
-                  </label>
-
-                  {photo && (
-                    <div className="text-center mb-3">
-                      <img
-                        src={URL.createObjectURL(photo)}
-                        alt="preview"
-                        className="img-preview"
-                      />
+                <div className="row">
+                  {/* Left Column: Media Upload */}
+                  <div className="col-lg-5 mb-4">
+                    <div className="upload-zone-pro">
+                      <label className="upload-label">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          hidden
+                          onChange={(e) => setPhoto(e.target.files[0])}
+                        />
+                        {photo ? (
+                          <div className="preview-container">
+                            <img src={URL.createObjectURL(photo)} alt="product" className="img-fluid rounded" />
+                            <div className="change-overlay"><FaCloudUploadAlt /> Change Photo</div>
+                          </div>
+                        ) : (
+                          <div className="upload-placeholder">
+                            <FaCloudUploadAlt className="up-icon" />
+                            <h6>Upload Product Image</h6>
+                            <p>PNG, JPG up to 5MB</p>
+                          </div>
+                        )}
+                      </label>
+                      {photo && (
+                         <button className="btn-remove-photo" onClick={() => setPhoto("")}>
+                           <FaTrash /> Remove
+                         </button>
+                      )}
                     </div>
-                  )}
+                  </div>
 
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Product name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+                  {/* Right Column: Details */}
+                  <div className="col-lg-7">
+                    <div className="form-grid-pro">
+                      <div className="row g-3">
+                        <div className="col-12">
+                          <Select
+                            placeholder="Search Category"
+                            size="large"
+                            showSearch
+                            className="pro-antd-select w-100"
+                            onChange={(v) => setCategory(v)}
+                          >
+                            {categories?.map((c) => (
+                              <Option key={c._id} value={c._id}>{c.name}</Option>
+                            ))}
+                          </Select>
+                        </div>
 
-                  <textarea
-                    className="form-control mb-3"
-                    placeholder="Product description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
+                        <div className="col-12">
+                          <input
+                            type="text"
+                            className="pro-input"
+                            placeholder="Product Title (e.g. iPhone 15 Pro Max)"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </div>
 
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    placeholder="Price (TK)"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
+                        <div className="col-12">
+                          <textarea
+                            className="pro-input"
+                            rows="4"
+                            placeholder="Write a detailed description..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          />
+                        </div>
 
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    placeholder="Quantity"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
+                        <div className="col-md-6">
+                          <div className="input-group-pro">
+                            <span className="unit">৳</span>
+                            <input
+                              type="number"
+                              className="pro-input ps-5"
+                              placeholder="Price"
+                              value={price}
+                              onChange={(e) => setPrice(e.target.value)}
+                            />
+                          </div>
+                        </div>
 
-                  <Select
-                    size="large"
-                    placeholder="Shipping available?"
-                    className="form-select mb-4"
-                    onChange={(value) => setShipping(value)}
-                  >
-                    <Option value="0">No</Option>
-                    <Option value="1">Yes</Option>
-                  </Select>
+                        <div className="col-md-6">
+                          <input
+                            type="number"
+                            className="pro-input"
+                            placeholder="Stock Quantity"
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                          />
+                        </div>
 
-                  <button className="btn btn-primary w-100" onClick={handleCreate}>
-                    Create Product
-                  </button>
+                        <div className="col-12">
+                          <Select
+                            placeholder="Shipping Status"
+                            size="large"
+                            className="pro-antd-select w-100"
+                            onChange={(v) => setShipping(v)}
+                          >
+                            <Option value="0">No Shipping</Option>
+                            <Option value="1">Shipping Available</Option>
+                          </Select>
+                        </div>
 
+                        <div className="col-12 mt-4">
+                          <button className="pro-submit-btn" onClick={handleCreate}>
+                            <FaCube className="me-2" /> Launch Product
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </Layout>

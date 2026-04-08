@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+.update-pro-page {
+  background: #f1f5f9; /* Clean Pro Background */
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.glass-card-pro {
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 40px;
+  border: 1px solid #e2e8f0;
+}
+
+/* HEADER STYLE */
+.icon-box-pro {
+  background: #2563eb;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* PHOTO AREA - MOBILE FRIENDLY */
+.pro-photo-area {
+  width: 100%;
+}
+
+.pro-upload-box {
+  width: 100%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #cbd5e1;
+}
+
+.main-img-pro {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-overlay-pro {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.pro-upload-box:hover .upload-overlay-pro {
+  opacity: 1;
+}
+
+.cam-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+/* INPUTS STYLING */
+.pro-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.pro-field-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  outline: none;
+  transition: 0.3s;
+}
+
+.pro-field-input:focus {
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* ANTD SELECT OVERRIDE */
+.pro-select .ant-select-selector {
+  border-radius: 14px !important;
+  background: #f8fafc !important;
+  height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  border: 1.5px solid #e2e8f0 !important;
+}
+
+/* BUTTONS */
+.action-grid-pro {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 15px;
+}
+
+.save-btn-pro {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  transition: 0.3s;
+}
+
+.delete-btn-pro {
+  background: #fff;
+  color: #ef4444;
+  border: 1.5px solid #ef4444;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  transition: 0.3s;
+}
+
+.save-btn-pro:hover { background: #1d4ed8; transform: translateY(-2px); }
+.delete-btn-pro:hover { background: #fef2f2; transform: translateY(-2px); }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .glass-card-pro {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  .action-grid-pro {
+    grid-template-columns: 1fr;
+  }
+  
+  .back-circle {
+    width: 35px;
+    height: 35px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #475569;
+  }
+
+  .pro-photo-area {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+}

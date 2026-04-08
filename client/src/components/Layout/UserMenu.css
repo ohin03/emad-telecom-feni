@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+.user-menu-wrapper {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-bottom: 30px;
+}
+
+.user-sidebar-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 25px 20px;
+  border: 1px solid #f1f5f9;
+}
+
+/* USER HEADER */
+.user-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.user-icon-bg {
+  font-size: 40px;
+  color: #0fb9b1;
+  background: #0fb9b110;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+}
+
+.user-text h5 {
+  margin: 0;
+  font-weight: 800;
+  color: #1e293b;
+  font-size: 17px;
+}
+
+.user-text p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* NAVIGATION */
+.user-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  text-decoration: none;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.user-nav-item:hover:not(.active) {
+  background: #f8fafc;
+  color: #0fb9b1 !important;
+  transform: translateX(5px);
+}
+
+.nav-icon-pro {
+  font-size: 18px;
+}
+
+.arrow-icon {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.user-nav-item.active .arrow-icon {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* SUPPORT BOX */
+.user-support-box {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.user-support-box p {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.support-btn-sm {
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.support-btn-sm:hover {
+  background: #0fb9b1;
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .user-sidebar-card {
+    padding: 20px 15px;
+  }
+}

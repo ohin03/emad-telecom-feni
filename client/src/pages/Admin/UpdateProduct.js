@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-
-import "./CreateProduct.css";
+import { FaEdit, FaTrashAlt, FaCamera, FaStore, FaSave, FaArrowLeft } from "react-icons/fa";
+import "./UpdateProduct.css";
 
 const { Option } = Select;
 
@@ -24,13 +24,9 @@ const UpdateProduct = () => {
   const [photo, setPhoto] = useState(null);
   const [id, setId] = useState("");
 
-  // ================= GET SINGLE PRODUCT =================
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
-      );
-
+      const { data } = await axios.get(`/api/v1/product/get-product/${params.slug}`);
       setName(data.product.name);
       setId(data.product._id);
       setDescription(data.product.description);
@@ -39,25 +35,19 @@ const UpdateProduct = () => {
       setShipping(data.product.shipping ? "1" : "0");
       setCategory(data.product.category?._id || "");
     } catch (error) {
-      console.log("GET SINGLE PRODUCT ERROR 👉", error);
       toast.error("Failed to load product");
     }
   };
 
   useEffect(() => {
     getSingleProduct();
-    // eslint-disable-next-line
   }, []);
 
-  // ================= GET ALL CATEGORIES =================
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
-      if (data?.success) {
-        setCategories(data.category);
-      }
+      if (data?.success) setCategories(data.category);
     } catch (error) {
-      console.log("GET CATEGORIES ERROR 👉", error);
       toast.error("Failed to load categories");
     }
   };
@@ -66,185 +56,194 @@ const UpdateProduct = () => {
     getAllCategory();
   }, []);
 
-  // ================= UPDATE PRODUCT =================
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     try {
       const productData = new FormData();
       productData.append("name", name);
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      // append category only when a valid id is selected
-      if (category && category !== "undefined") {
-        productData.append("category", category);
-      }
-      // shipping kept as string "0"/"1"; backend normalizes it
-      if (shipping === "0" || shipping === "1") {
-        productData.append("shipping", shipping);
-      }
+      if (category) productData.append("category", category);
+      if (shipping) productData.append("shipping", shipping);
       if (photo) productData.append("photo", photo);
 
-      // debug: list FormData entries
-      try {
-        // eslint-disable-next-line no-console
-        console.log("Update Product FormData:", [...productData.entries()]);
-      } catch (e) {}
-
-      const { data } = await axios.put(
-        `/api/v1/product/update-product/${id}`,
-        productData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
+      const { data } = await axios.put(`/api/v1/product/update-product/${id}`, productData);
       if (data?.success) {
-        toast.success("Product updated successfully");
+        toast.success("Product Updated Successfully");
         navigate("/dashboard/admin/products");
-      } else {
-        toast.error(data?.message);
       }
     } catch (error) {
-      console.log("UPDATE ERROR 👉", error.response?.data || error.message);
-      toast.error(error.response?.data?.message || "Something went wrong");
+      toast.error("Update failed");
     }
   };
 
-  // ================= DELETE PRODUCT =================
   const handleDelete = async () => {
     try {
-      const answer = window.confirm(
-        "Are you sure you want to delete this product?"
-      );
+      let answer = window.confirm("Do you really want to delete this asset?");
       if (!answer) return;
-
       await axios.delete(`/api/v1/product/delete-product/${id}`);
-
-      toast.success("Product deleted successfully");
+      toast.success("Product Purged Successfully");
       navigate("/dashboard/admin/products");
     } catch (error) {
-      console.log("DELETE ERROR 👉", error);
-      toast.error("Something went wrong");
+      toast.error("Delete failed");
     }
   };
 
   return (
-    <Layout title="Dashboard - Update Product">
-      <div className="create-product-page container-fluid">
-        <div className="row">
-          {/* Sidebar */}
-          <div className="col-12 col-md-3 admin-sidebar">
-            <AdminMenu />
-          </div>
+    <Layout title="System - Update Product">
+      <div className="update-pro-page">
+        <div className="container-fluid py-4">
+          <div className="row g-4 justify-content-center">
+            
+            {/* Sidebar for Desktop */}
+            <div className="col-lg-3 d-none d-lg-block">
+              <div className="sticky-pro-menu">
+                <AdminMenu />
+              </div>
+            </div>
 
-          {/* Content */}
-          <div className="col-12 col-md-9 d-flex justify-content-center">
-            <div className="create-product-wrapper">
-              <h1>Update Product</h1>
+            {/* Main Form Section */}
+            <div className="col-lg-8 col-12">
+              <div className="glass-card-pro shadow-lg">
+                
+                {/* Mobile Back Button & Header */}
+                <div className="form-head-pro d-flex align-items-center justify-content-between mb-4">
+                  <div className="d-flex align-items-center gap-3">
+                    <div className="back-circle d-lg-none" onClick={() => navigate(-1)}>
+                       <FaArrowLeft />
+                    </div>
+                    <div className="icon-box-pro">
+                      <FaEdit />
+                    </div>
+                    <div>
+                      <h4 className="m-0 fw-bold">Update Asset</h4>
+                      <p className="text-muted small m-0">Editing: {name || "Loading..."}</p>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="create-product-glass">
-                <div className="create-product-card-c">
-                  {/* Category */}
-                  <Select
-                    size="large"
-                    placeholder="Select category"
-                    className="form-select mb-3"
-                    onChange={(value) => setCategory(value)}
-                    value={category || undefined}
-                  >
-                    {categories?.map((c) => (
-                      <Option key={c._id} value={c._id}>
-                        {c.name}
-                      </Option>
-                    ))}
-                  </Select>
-
-                  {/* Upload */}
-                  <label className="btn upload-btn mb-3">
-                    {photo ? photo.name : "Upload Product Photo"}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) => setPhoto(e.target.files[0])}
-                    />
-                  </label>
-
-                  {/* Preview */}
-                  <div className="text-center mb-3">
-                    <img
-                      src={
-                        photo
-                          ? URL.createObjectURL(photo)
-                          : `/api/v1/product/product-photo/${id}`
-                      }
-                      alt="preview"
-                      className="img-preview"
-                    />
+                <div className="row">
+                  {/* Photo Section */}
+                  <div className="col-md-5 mb-4">
+                    <div className="pro-photo-area">
+                      <label className="pro-upload-box">
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          hidden 
+                          onChange={(e) => setPhoto(e.target.files[0])} 
+                        />
+                        <div className="image-preview-wrapper">
+                          <img
+                            src={photo ? URL.createObjectURL(photo) : `/api/v1/product/product-photo/${id}`}
+                            alt="product"
+                            className="main-img-pro"
+                          />
+                          <div className="upload-overlay-pro">
+                            <FaCamera className="cam-icon" />
+                            <span>Replace Media</span>
+                          </div>
+                        </div>
+                      </label>
+                      <p className="text-center mt-2 small text-muted">Click image to change</p>
+                    </div>
                   </div>
 
-                  {/* Product Inputs */}
-                  <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Product name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+                  {/* Form Inputs */}
+                  <div className="col-md-7">
+                    <div className="pro-input-stack">
+                      
+                      <div className="field-block mb-3">
+                        <label className="pro-label">Catalog Category</label>
+                        <Select
+                          showSearch
+                          size="large"
+                          placeholder="Select a category"
+                          className="pro-select w-100"
+                          onChange={(v) => setCategory(v)}
+                          value={category}
+                        >
+                          {categories?.map((c) => (
+                            <Option key={c._id} value={c._id}>{c.name}</Option>
+                          ))}
+                        </Select>
+                      </div>
 
-                  <textarea
-                    className="form-control mb-3"
-                    placeholder="Product description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
+                      <div className="field-block mb-3">
+                        <label className="pro-label">Display Title</label>
+                        <input
+                          type="text"
+                          className="pro-field-input"
+                          value={name}
+                          placeholder="Enter product name"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
 
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    placeholder="Price (TK)"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
+                      <div className="field-block mb-3">
+                        <label className="pro-label">Description</label>
+                        <textarea
+                          rows="4"
+                          className="pro-field-input"
+                          value={description}
+                          placeholder="Technical specifications..."
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                      </div>
 
-                  <input
-                    type="number"
-                    className="form-control mb-3"
-                    placeholder="Quantity"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
+                      <div className="row g-3">
+                        <div className="col-6">
+                          <label className="pro-label">Unit Price (TK)</label>
+                          <input
+                            type="number"
+                            className="pro-field-input"
+                            value={price}
+                            placeholder="0.00"
+                            onChange={(e) => setPrice(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-6">
+                          <label className="pro-label">Inventory Qty</label>
+                          <input
+                            type="number"
+                            className="pro-field-input"
+                            value={quantity}
+                            placeholder="Stock"
+                            onChange={(e) => setQuantity(e.target.value)}
+                          />
+                        </div>
+                      </div>
 
-                  <Select
-                    size="large"
-                    placeholder="Shipping available?"
-                    className="form-select mb-4"
-                    onChange={(value) => setShipping(value)}
-                    value={shipping || undefined}
-                  >
-                    <Option value="0">No</Option>
-                    <Option value="1">Yes</Option>
-                  </Select>
+                      <div className="field-block mt-3 mb-4">
+                        <label className="pro-label">Logistics Option</label>
+                        <Select
+                          size="large"
+                          className="pro-select w-100"
+                          onChange={(v) => setShipping(v)}
+                          value={shipping}
+                        >
+                          <Option value="0">Local Pickup Only</Option>
+                          <Option value="1">Express Shipping</Option>
+                        </Select>
+                      </div>
 
-                  {/* Buttons */}
-                  <button
-                    className="btn btn-primary w-100 mb-2"
-                    onClick={handleUpdate}
-                  >
-                    UPDATE PRODUCT
-                  </button>
+                      {/* Action Buttons */}
+                      <div className="action-grid-pro mt-4">
+                        <button className="save-btn-pro" onClick={handleUpdate}>
+                          <FaSave className="me-2" /> Save Changes
+                        </button>
+                        <button className="delete-btn-pro" onClick={handleDelete}>
+                          <FaTrashAlt className="me-2" /> Delete Asset
+                        </button>
+                      </div>
 
-                  <button
-                    className="btn btn-danger w-100"
-                    onClick={handleDelete}
-                  >
-                    DELETE PRODUCT
-                  </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -253,4 +252,3 @@ const UpdateProduct = () => {
 };
 
 export default UpdateProduct;
-

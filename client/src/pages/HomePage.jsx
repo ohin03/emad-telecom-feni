@@ -211,7 +211,7 @@ function HomePage() {
               {products.length < total && (
                 <div className="text-center my-5 pb-5">
                   <button className="btn btn-danger" onClick={loadMore} disabled={loading}>
-                    {loading ? "Loading..." : "EXPLORE MORE"}
+                    {loading ? "Loading..." : "Explore MORE"}
                   </button>
                 </div>
               )}

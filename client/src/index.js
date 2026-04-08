@@ -8,6 +8,7 @@ import { AuthProvider } from './context/auth';
 import { SearchProvider } from './context/search';
 import 'antd/dist/reset.css';
 import { CartProvider } from './context/cart';
+import ScrollToTop from './components/ScrollToTop';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,8 @@ root.render(
     <SearchProvider>
       <CartProvider>
          <BrowserRouter>
-           <App/>
+           <ScrollToTop />
+           <App />
          </BrowserRouter>
       </CartProvider>
    </SearchProvider>

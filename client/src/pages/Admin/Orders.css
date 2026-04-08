@@ -241,20 +241,6 @@
     margin-right: 0;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Cancelled Order Highlight */
 .orders-admin-card.cancelled {
   border: 2px solid #dc3545; /* strong red border */
@@ -275,16 +261,6 @@
   background-color: #f5c6cb; /* lighter red for comment bubbles */
   color: #721c24;
 }
-
-
-
-
-
-
-
-
-
-/* ====== Responsive ====== */
 
 /* ====== Responsive ====== */
 @media (max-width: 768px) {
@@ -328,4 +304,81 @@
   .orders-admin-products {
     gap: 10px;
   }
+}
+
+
+.orders-admin-pagination button{
+  min-width:110px;
+}
+
+
+
+
+
+
+
+
+
+
+/* PAGINATION BASE */
+.orders-admin-pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+/* page text */
+.page-info{
+  font-size:18px;
+  font-weight:600;
+  min-width:140px;
+  text-align:center;
+}
+/* ===== PAGINATION WRAPPER ===== */
+.orders-admin-pagination{
+  max-width:420px;
+  margin:auto;
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+
+/* buttons */
+.orders-admin-pagination .btn{
+  width:100%;
+  font-weight:600;
+  padding:10px 14px;
+}
+
+/* page text */
+.page-info{
+  text-align:center;
+  font-weight:600;
+  font-size:18px;
+}
+
+/* left & right alignment */
+.prev-btn{ justify-self:start; }
+.next-btn{ justify-self:end; }
+
+/* ===== MOBILE VIEW ===== */
+@media (max-width:768px){
+
+  .orders-admin-pagination{
+    grid-template-columns: 1fr 1fr;
+    max-width:300px;
+    row-gap:8px;
+  }
+
+  .page-info{
+    grid-column:1 / -1;
+    order:-1;
+    font-size:16px;
+  }
+
+  .prev-btn{ justify-self:stretch; }
+  .next-btn{ justify-self:stretch; }
 }
